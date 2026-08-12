@@ -1,0 +1,1 @@
+{"resource":"https://auth.jampp.com","authorization_servers":["https://auth.jampp.com"],"bearer_methods_supported":["header"],"scopes_supported":["."]}

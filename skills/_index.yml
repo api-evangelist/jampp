@@ -1,0 +1,26 @@
+generated: '2026-08-12'
+method: generated
+source: https://developers.jampp.com/docs/reporting-api/
+note: >-
+  Jampp publishes no AGENTS.md and no provider-authored skill files (searched the docs host
+  and the github.com/jampp organisation). These skills are generated from the published
+  Reporting API reference. Every operation named is a real, documented GraphQL field —
+  Query.pivot, Query.asyncPivot, Query.asyncPivots, Query.postbackShare and
+  Mutation.createAsyncPivot are the complete published operation set. There is no OpenAPI to
+  ground operationIds in; the GraphQL operation names in the provider's own reference are
+  used instead.
+skills:
+- file: jampp-pull-spend-by-campaign.md
+  name: Pull Jampp spend and funnel metrics by campaign
+  api: https://reporting-api.jampp.com/v1/graphql
+  operations: [Query.pivot]
+- file: jampp-run-async-pivot-export.md
+  name: Export a large Jampp report through an async pivot
+  api: https://reporting-api.jampp.com/v1/graphql
+  operations: [Mutation.createAsyncPivot, Query.asyncPivot, Query.asyncPivots]
+skill_count: 2
+uncovered_operations:
+- Query.postbackShare
+uncovered_note: >-
+  postbackShare is documented as returning the distribution of postback values but the
+  reference carries no worked example, so it was left out rather than guessed at.

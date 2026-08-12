@@ -1,0 +1,63 @@
+generated: '2026-08-12'
+method: searched
+source: https://developers.jampp.com/docs/reporting-api/
+limit_count: 0
+note: >-
+  Jampp publishes NO numeric rate limit. There is no requests-per-second, per-minute or
+  per-day quota anywhere in the Reporting API documentation, no X-RateLimit-*, RateLimit-*
+  or Retry-After header was observed on a live unauthenticated response, and no 429
+  behaviour is described. What Jampp does publish, in a section titled "API Limitations",
+  is a set of STRUCTURAL query limits — retention windows and forbidden dimension
+  combinations — which constrain what a query may ask for rather than how often it may ask.
+  Those are recorded below as constraints, not as rate limits, because they are a different
+  control and must not be counted as a published request budget.
+limits: []
+headers:
+  request: []
+  response: []
+  observed: none
+status_on_exhaustion: undocumented
+retry_guidance:
+  published: false
+  note: >-
+    The only retry signal in the whole surface is the AsyncPivotStatus value UP_FOR_RETRY,
+    which reports that Jampp is retrying a failed async pivot internally. No client-side
+    backoff guidance is given.
+structural_constraints:
+- constraint: hourly-granularity-retention
+  scope: query
+  description: HOURLY granularity is available only for the last 15 days (L15D); older data is rolled up to daily.
+  source: 'Reporting API documentation, "API Limitations"'
+- constraint: sitebundle-retention
+  scope: query
+  description: The siteBundle dimension is available only for the last 3 months (L3M); beyond that the dimension is NULLed and the data rolled up.
+  source: 'Reporting API documentation, "API Limitations"'
+- constraint: incompatible-dimension-combinations
+  scope: query
+  description: >-
+    Certain dimension combinations cannot be executed synchronously — the documentation
+    names siteBundle together with ad-related dimensions. The field reference adds that
+    siteName and siteBundle cannot be queried simultaneously with region, city, dma,
+    zipCode, ad or adId.
+  source: 'Reporting API documentation, "API Limitations" and PivotDimensions field descriptions'
+- constraint: large-result-must-go-async
+  scope: query
+  description: >-
+    Reports with large output (the documented example is siteBundle over the last 7 days)
+    may not return synchronously; the documented remedy is createAsyncPivot.
+  source: 'Reporting API documentation, "API Limitations"'
+- constraint: query-priority
+  scope: account
+  description: >-
+    The context input accepts a priority integer — "queries with higher priority get
+    precedence for computational resources" — which implies a shared compute pool and
+    contention between a customer's own queries, but no ceiling is published.
+  source: 'Reporting API documentation, Context type'
+x-evidence:
+  fetched: '2026-08-12'
+  urls:
+  - url: https://developers.jampp.com/docs/reporting-api/
+    status: 200
+  - url: https://reporting-api.jampp.com/v1/graphql
+    status: 401
+    note: Response carried no rate-limit headers.

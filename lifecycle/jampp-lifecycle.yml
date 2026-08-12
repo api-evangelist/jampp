@@ -1,0 +1,61 @@
+generated: '2026-08-12'
+method: searched
+source: https://developers.jampp.com/docs/reporting-api/
+versioning:
+  scheme: uri-path
+  current: v1
+  hosts:
+  - https://reporting-api.jampp.com/v1/graphql
+  - https://auth.jampp.com/v1/oauth/token
+  policy_published: false
+  note: >-
+    v1 is the only version Jampp has published. No version-negotiation header, no dated
+    version train, and no statement of how long a version is supported.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: unknown
+  deprecated_fields_published: false
+  note: >-
+    No deprecation policy, no Sunset/Deprecation header commitment (RFC 8594), and no
+    @deprecated markings surfaced in the published GraphQL reference. Because introspection
+    is auth-gated, an anonymous client cannot discover deprecations either.
+sla:
+  url: null
+  uptime_target: null
+  note: No public SLA. Jampp is a managed DSP sold through sales; availability terms live in the advertiser contract.
+status_page:
+  url: null
+  probed:
+  - url: https://status.jampp.com/
+    status: DNS NXDOMAIN
+  note: No status page exists on any conventional host, and none is linked from the site or docs.
+support:
+  channel: productsupport@jampp.com
+  source: 'Reporting API documentation, Contact block'
+  web: https://www.jampp.com/contact
+data_retention:
+  note: Retention is expressed as reporting granularity decay rather than deletion.
+  windows:
+  - window: last 15 days
+    granularity: HOURLY available; rolled up to daily after that.
+  - window: last 3 months
+    granularity: siteBundle available; the dimension is NULLed and the data rolled up after that.
+  source: 'Reporting API documentation, "API Limitations"'
+client_library_lifecycle:
+  package: jampp_reporting_api_client
+  latest_release: 0.3.2
+  latest_release_date: '2026-06-01'
+  documented_release: 0.3.0
+  documented_release_date: '2022-09-12'
+  note: >-
+    The published client changelog stops nearly four years before the version PyPI actually
+    serves. See changelog/jampp-changelog.yml.
+deprecated_operations: []
+x-evidence:
+  fetched: '2026-08-12'
+  urls:
+  - url: https://developers.jampp.com/docs/reporting-api/
+    status: 200
+  - url: https://www.jampp.com/pricing
+    status: 404

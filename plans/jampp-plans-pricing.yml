@@ -1,0 +1,42 @@
+generated: '2026-08-12'
+method: searched
+source: https://www.jampp.com/
+plan_count: 0
+note: >-
+  Jampp publishes no plans, no price list and no self-serve signup. It is a managed
+  programmatic demand-side platform sold through a sales conversation: the site's only
+  conversion paths are "Contact us" and "Get started" forms, and the sitemap contains no
+  pricing page (https://www.jampp.com/pricing returns 404). Media is bought on advertiser
+  contracts — the pivot vocabulary exposes campaignGoalType/campaignGoalValue and
+  contractual-goal fields (CPI, CPA, ROAS, CPC/CPM), and a billableSpend metric described
+  as "spend calculation for CPA/CPI deals" — which shows commercial terms are negotiated
+  per campaign rather than published. The Reporting API itself is not separately priced; it
+  is an entitlement of being a Jampp advertiser, and credentials are minted from the Silver
+  dashboard.
+plans: []
+commercial_model:
+  type: contract-negotiated
+  buying_models_evidenced:
+  - CPI
+  - CPA
+  - CPC
+  - CPM
+  - ROAS
+  evidence_source: >-
+    campaignGoalType / campaignContractualGoalType / billableSpend fields in the published
+    Reporting API vocabulary.
+  api_access: Included with an advertiser account; API keys self-issued at https://app.jampp.com/users/credentials.
+  self_serve: false
+  free_tier: false
+  trial: false
+probed:
+- url: https://www.jampp.com/pricing
+  status: 404
+- url: https://www.jampp.com/sitemap.xml
+  status: 200
+  finding: No pricing or plans URL present.
+- url: https://www.jampp.com/contact
+  status: 200
+  finding: Sales contact form — the published route to commercial terms.
+x-evidence:
+  fetched: '2026-08-12'

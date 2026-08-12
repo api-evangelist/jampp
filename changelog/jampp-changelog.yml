@@ -1,0 +1,49 @@
+generated: '2026-08-12'
+method: searched
+source: https://developers.jampp.com/docs/reporting-api-client/changelog.html
+scope: client-library
+scope_note: >-
+  This is the changelog for the first-party Python client (jampp_reporting_api_client), the
+  only dated change log Jampp publishes. The Reporting API itself has NO published
+  changelog, release notes or version history — developers.jampp.com carries exactly two
+  documents (the Reporting API reference and the client docs) and neither records API-side
+  changes. Do not read the entries below as API changes.
+versioning:
+  scheme: semver
+  current_documented: 0.3.0
+  current_published: 0.3.2
+  discrepancy: >-
+    PyPI serves 0.3.2 (2026-06-01) but the published changelog stops at v0.3.0
+    (2022-09-12), so the two most recent releases are undocumented.
+entries:
+- version: 0.3.0
+  date: '2022-09-12'
+  breaking: false
+  added:
+  - Workflows for CI and publishing to PyPI.
+  - Documentation hosted publicly.
+  changed:
+  - Removed Jampp's internal references.
+- version: 0.2.0
+  date: '2022-08-29'
+  breaking: false
+  added:
+  - Removed the need for GraphQL introspection on the client.
+- version: 0.1.0
+  date: '2022-07-19'
+  breaking: false
+  added:
+  - Base ReportingAPIClient implementation using OAuth for authentication.
+  - Renamed to reporting_api_client.
+entry_count: 3
+api_changelog:
+  published: false
+  searched:
+  - https://developers.jampp.com/docs/
+  - https://developers.jampp.com/docs/reporting-api/
+  - https://www.jampp.com/blog
+x-evidence:
+  fetched: '2026-08-12'
+  urls:
+  - url: https://developers.jampp.com/docs/reporting-api-client/changelog.html
+    status: 200

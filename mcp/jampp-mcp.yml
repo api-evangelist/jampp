@@ -1,0 +1,68 @@
+generated: '2026-08-12'
+method: derived
+status: candidate
+source: https://developers.jampp.com/docs/reporting-api/
+summary: >-
+  Jampp publishes NO hosted or remote MCP server. Searched the developer portal, the
+  github.com/jampp organisation (48 public repos — infrastructure forks and Ansible roles,
+  plus one empty repo named jampp-ai-assistant with no README and no code), npm, and the
+  public MCP registries; probed https://api.jampp.com/mcp, https://api.jampp.com/v1/mcp and
+  https://reporting-api.jampp.com/mcp (all HTTP 404) and mcp.jampp.com / ai.jampp.com /
+  assistant.jampp.com (all NXDOMAIN). The tool list below is a CANDIDATE surface derived
+  from the five documented GraphQL operations; no MCP endpoint is implied to exist and NO
+  MCPServer pointer is wired into apis.yml.
+server:
+  name: jampp
+  transport: null
+  url: null
+  published: false
+  auth:
+    type: oauth2
+    flow: clientCredentials
+    token_url: https://auth.jampp.com/v1/oauth/token
+    header: 'Authorization: Bearer {access_token}'
+    artifact: authentication/jampp-authentication.yml
+tool_count: 5
+tools:
+- name: run_pivot_report
+  description: >-
+    Run a synchronous Jampp pivot report — funnel metrics grouped by the requested
+    dimensions for a from/to period, with optional filter, cleanup, granularity, cohort and
+    timezone context.
+  source_operation: 'graphql:Query.pivot'
+  input_fields: [from, to, filter, cleanup, options, context, cohortType, cohortWindow]
+  note: Dimensions and metrics are selected through the GraphQL selection set, not as arguments.
+- name: create_async_pivot
+  description: Queue a large pivot report for asynchronous execution and return its id and status.
+  source_operation: 'graphql:Mutation.createAsyncPivot'
+  input_fields: [from, to, dimensions, metrics, filter, cleanup, granularity, cohortType, cohortWindow, context, options]
+  mutation: true
+- name: get_async_pivot
+  description: Get the status of one async pivot and, once READY, the signed CSV result URL.
+  source_operation: 'graphql:Query.asyncPivot'
+  input_fields: [pivotId]
+- name: list_async_pivots
+  description: Get the status of several async pivots at once; with no ids, all of the caller's pivots.
+  source_operation: 'graphql:Query.asyncPivots'
+  input_fields: [pivotIds]
+- name: get_postback_share
+  description: Analyse the distribution of postback values for installs or events.
+  source_operation: 'graphql:Query.postbackShare'
+  input_fields: [track]
+schema_availability:
+  introspection: gated
+  evidence:
+    url: https://reporting-api.jampp.com/v1/graphql
+    status: 401
+    body: '{"error":"Neither Cookie nor Authorization present."}'
+  note: >-
+    Real inputSchemas for these tools would come from the GraphQL argument definitions, which
+    require an authenticated introspection call. The input_fields above are the argument
+    names printed in the public reference, not a reconstructed schema.
+searched:
+- https://developers.jampp.com/docs/
+- https://github.com/jampp
+- https://api.jampp.com/mcp
+- https://reporting-api.jampp.com/mcp
+x-evidence:
+  fetched: '2026-08-12'

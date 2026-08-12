@@ -1,0 +1,128 @@
+generated: '2026-08-12'
+method: searched
+source: https://developers.jampp.com/docs/reporting-api/
+summary: >-
+  Cross-cutting request/response semantics for the Jampp Reporting API, read from the
+  published documentation and confirmed against live unauthenticated probes. The API is a
+  single GraphQL endpoint, so several conventions that a REST API would carry in headers
+  (pagination, filtering, sparse fields) are instead expressed as GraphQL arguments.
+protocol:
+  style: GraphQL
+  endpoint: https://reporting-api.jampp.com/v1/graphql
+  method: POST
+  content_type: application/json
+  transport_note: >-
+    The documentation's "API Endpoints" block prints https://reporting-api.com/graphql,
+    which is not a Jampp host. Every worked example in the same document — and the only
+    endpoint that answers — is https://reporting-api.jampp.com/v1/graphql. Treat the
+    endpoints block as a documentation defect.
+authentication:
+  style: oauth2-client-credentials
+  header: 'Authorization: Bearer {access_token}'
+  token_endpoint: https://auth.jampp.com/v1/oauth/token
+  token_lifetime_seconds: 7200
+  refresh: Re-request a token from the token endpoint; no refresh token is issued for client credentials.
+  artifact: authentication/jampp-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency key, request-deduplication header or retry-safety contract is documented
+    anywhere in the Reporting API docs. The read path (pivot, asyncPivot, asyncPivots,
+    postbackShare) is naturally safe to repeat; the one mutation, createAsyncPivot, creates
+    a new pivot with a new UUID on every call, so a retried mutation produces a duplicate
+    job rather than returning the original. Recorded as absent — no Idempotency pointer is
+    emitted for this provider.
+pagination:
+  style: none
+  note: >-
+    The pivot query returns the full result set for the requested dimensions and period;
+    there is no cursor, offset, limit or page argument. The documented remedy for a large
+    result is not a page but a different execution mode — createAsyncPivot, which writes the
+    whole result to a signed CSV URL.
+  result_shaping:
+  - argument: filter
+    description: 'Field-level predicates, e.g. filter: {campaignId: {equals: $campaignId}}.'
+  - argument: cleanup
+    description: >-
+      Post-processing predicates applied after the report is computed, e.g.
+      cleanup: {clicks: {greaterThan: "0"}}. Operators are greaterThan, greaterOrEqualThan,
+      lowerThan, lowerOrEqualThan.
+  - argument: 'options: {removeZeroRows: true}'
+    description: Drops empty rows from the result to reduce payload bloat. Default false.
+  - argument: 'granularity (on the date dimension)'
+    description: NONE, DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY, MILLENNIUM.
+  - argument: 'context: {sqlTimeZone, priority}'
+    description: >-
+      sqlTimeZone takes a JodaTime zone name and applies to both the results and any date
+      input that carries no explicit timezone. priority raises a query's claim on
+      computational resources.
+field_selection:
+  style: graphql-selection-set
+  note: >-
+    Sparse fieldsets are native — a caller asks only for the dimensions and metrics it
+    needs. Fragments on PivotMetrics are documented as the reuse mechanism for repeated
+    metric selections. results and totals are sibling selections on the same pivot; totals
+    accepts fewer dimensions because not everything can be aggregated.
+async_execution:
+  mutation: createAsyncPivot
+  poll_query: asyncPivot(pivotId)
+  batch_poll_query: asyncPivots(pivotIds)
+  statuses: [PENDING, QUEUED, RUNNING, READY, UP_FOR_RETRY, FAILED]
+  result: >-
+    On READY the asyncPivot.url field carries a signed URL to a CSV of the pivot result.
+    outputType is S3.
+  note: No callback or webhook is offered; the caller polls.
+versioning:
+  scheme: uri-path
+  current: v1
+  evidence:
+  - https://reporting-api.jampp.com/v1/graphql
+  - https://auth.jampp.com/v1/oauth/token
+  note: >-
+    v1 is the only version ever published. GraphQL field-level evolution, not versioned
+    endpoints, is the de facto change mechanism, and no deprecation directive is surfaced in
+    the published reference.
+error_envelope:
+  graphql_layer:
+    shape: 'Standard GraphQL response: {"data": ..., "errors": [...]}'
+    note: The reference documents no custom error extensions.
+  transport_layer:
+    shape: '{"error": "<message>"} or {"error": {"message": "<message>"}}'
+    observed:
+    - status: 401
+      body: '{"error":"Neither Cookie nor Authorization present."}'
+      host: reporting-api.jampp.com
+    - status: 400
+      body: '{"error":{"message":"Invalid request: content must be application/x-www-form-urlencoded"}}'
+      host: auth.jampp.com
+    note: >-
+      The two hosts do not agree on the envelope shape — reporting-api returns a string
+      under "error", auth returns an object. Neither uses RFC 9457 problem+json.
+  artifact: errors/jampp-problem-types.yml
+rate_limit_signaling:
+  headers: none observed
+  status_on_exhaustion: undocumented
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header was observed on an unauthenticated
+    response, and no numeric quota is published. What Jampp does publish is a set of
+    structural query limits (retention windows, forbidden dimension combinations) rather
+    than a request budget.
+  artifact: rate-limits/jampp-rate-limits.yml
+request_tracing:
+  request_id_header: none documented
+metadata:
+  custom_fields:
+  - adParameter — custom value on an ad
+  - campaignParameter — custom value on a campaign, set in the Silver dashboard
+  - groupParameter — custom value on a group, set in the Silver dashboard
+  note: >-
+    Jampp's equivalent of arbitrary metadata is three named passthrough parameter fields
+    configured in the dashboard and returned as pivot dimensions. There is no free-form
+    metadata map.
+cross_links:
+  authentication: authentication/jampp-authentication.yml
+  errors: errors/jampp-problem-types.yml
+  lifecycle: lifecycle/jampp-lifecycle.yml
+  rate_limits: rate-limits/jampp-rate-limits.yml
+  vocabulary: vocabulary/jampp-reporting-vocabulary.yml

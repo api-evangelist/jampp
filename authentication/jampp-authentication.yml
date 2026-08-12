@@ -1,0 +1,74 @@
+generated: '2026-08-12'
+method: searched
+source: https://developers.jampp.com/docs/reporting-api/
+docs: https://developers.jampp.com/docs/reporting-api/
+probe_source: https://auth.jampp.com/.well-known/oauth-authorization-server
+note: >-
+  Derived by hand from the published Reporting API documentation and from the RFC 8414
+  authorization-server metadata Jampp actually serves. There is no OpenAPI to run
+  derive-authentication.py against — the only public contract is a GraphQL endpoint whose
+  introspection is auth-gated.
+summary:
+  types: [oauth2]
+  api_key_in: []
+  oauth2_flows: [clientCredentials, authorizationCode]
+  documented_flow: clientCredentials
+  bearer_methods: [header]
+schemes:
+- name: OAuth2ClientCredentials
+  type: oauth2
+  flow: clientCredentials
+  token_url: https://auth.jampp.com/v1/oauth/token
+  request_content_type: application/x-www-form-urlencoded
+  parameters:
+  - grant_type (must be the exact string client_credentials)
+  - client_id
+  - client_secret
+  response_fields: [access_token, token_type, expires_in]
+  token_type: Bearer
+  token_lifetime_seconds: 7200
+  usage: 'Authorization: Bearer {access_token} on every Reporting API request'
+  credential_issuance: https://app.jampp.com/users/credentials
+  credential_note: >-
+    Client ID / client secret pairs are self-issued from the Credentials section of the
+    Silver dashboard. Jampp documents creating one key pair per integrating service so a
+    single key can be revoked without affecting the others.
+  sources: [https://developers.jampp.com/docs/reporting-api/]
+- name: OAuth2AuthorizationCode
+  type: oauth2
+  flow: authorizationCode
+  authorization_url: https://auth.jampp.com/v1/oauth/authorize
+  token_url: https://auth.jampp.com/v1/oauth/token
+  registration_url: https://auth.jampp.com/v1/oauth/register
+  pkce: [S256]
+  token_endpoint_auth_methods: [none]
+  advertised_only: true
+  note: >-
+    Advertised in the authorization-server metadata (grant_types_supported also lists
+    refresh_token) but not documented in the developer docs, which cover only the
+    client-credentials flow. Recorded as advertised, not as a documented developer path.
+  sources: [https://auth.jampp.com/.well-known/oauth-authorization-server]
+token_validation:
+  jwks_uri: https://auth.jampp.com/.well-known/jwks.json
+  algorithms: [ES256]
+  curve: secp256k1
+  key_ids: [v1, v2]
+protected_resources:
+- resource: https://api.jampp.com
+  authorization_servers: [https://auth.jampp.com]
+  bearer_methods_supported: [header]
+  source: https://api.jampp.com/.well-known/oauth-protected-resource
+- resource: https://auth.jampp.com
+  authorization_servers: [https://auth.jampp.com]
+  bearer_methods_supported: [header]
+  source: https://auth.jampp.com/.well-known/oauth-protected-resource
+observed:
+- request: POST https://reporting-api.jampp.com/v1/graphql with no Authorization header
+  status: 401
+  body: '{"error":"Neither Cookie nor Authorization present."}'
+  fetched: '2026-08-12'
+- request: POST https://auth.jampp.com/v1/oauth/token with a JSON body
+  status: 400
+  body: '{"error":{"message":"Invalid request: content must be application/x-www-form-urlencoded"}}'
+  fetched: '2026-08-12'
+  note: The token endpoint rejects JSON; the form encoding is mandatory as documented.

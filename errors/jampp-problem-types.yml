@@ -1,0 +1,72 @@
+generated: '2026-08-12'
+method: probed
+source: live unauthenticated requests to reporting-api.jampp.com and auth.jampp.com
+docs: https://developers.jampp.com/docs/reporting-api/
+format: proprietary
+format_note: >-
+  Not RFC 9457. Jampp publishes no error reference at all — the Reporting API documentation
+  has no error section, no status-code table and no error-code list. Everything below was
+  either observed on a live probe or read out of the documented async pivot state machine.
+  Nothing is inferred from convention.
+envelopes:
+- host: reporting-api.jampp.com
+  shape: '{"error": "<string>"}'
+  content_type: application/json
+- host: auth.jampp.com
+  shape: '{"error": {"message": "<string>"}}'
+  content_type: application/json
+- layer: graphql
+  shape: '{"data": ..., "errors": [{"message": ...}]}'
+  note: Standard GraphQL error array; no documented extensions or machine-readable codes.
+problems:
+- status: 401
+  title: Missing credentials
+  detail: 'Neither Cookie nor Authorization present.'
+  source: POST https://reporting-api.jampp.com/v1/graphql with no Authorization header
+  observed: '2026-08-12'
+  remediation: >-
+    Mint a token at https://auth.jampp.com/v1/oauth/token with grant_type=client_credentials
+    and send it as Authorization: Bearer {access_token}.
+- status: 400
+  title: Wrong token-request encoding
+  detail: 'Invalid request: content must be application/x-www-form-urlencoded'
+  source: POST https://auth.jampp.com/v1/oauth/token with a JSON body
+  observed: '2026-08-12'
+  remediation: Post the token request as form-encoded fields, not JSON.
+- status: 404
+  title: Not Found
+  detail: '{"error":{"message":"Not Found"}}'
+  source: GET https://auth.jampp.com/.well-known/security.txt
+  observed: '2026-08-12'
+  remediation: Not an error condition of the API; recorded because it fixes the 404 envelope shape.
+async_failure_states:
+  note: >-
+    The Reporting API's only asynchronous failure signalling is the AsyncPivotStatus enum on
+    the asyncPivot query. There is no error message field on AsyncPivot in the published
+    reference, so a failed job reports a state and nothing else.
+  states:
+  - state: UP_FOR_RETRY
+    meaning: The pivot failed and is queued to be attempted again.
+    action: Keep polling asyncPivot(pivotId).
+  - state: FAILED
+    meaning: The pivot will not complete.
+    action: >-
+      Re-issue createAsyncPivot with a narrower dimension set or shorter period; the
+      documented causes of failure are oversized reports and forbidden dimension
+      combinations. No diagnostic detail is returned.
+documented_constraints_that_surface_as_errors:
+- constraint: siteName and siteBundle cannot be queried simultaneously with region, city, dma, zipCode, ad or adId.
+  source: PivotDimensions field descriptions
+- constraint: Some dimension combinations (for example siteBundle plus ad-related dimensions) cannot be executed synchronously.
+  source: 'Reporting API documentation, "API Limitations"'
+gaps:
+- No error-code registry is published.
+- No error catalog page, no status-code table, no rate-limit error documented.
+- GraphQL errors carry no extensions.code, so an agent cannot branch on a stable identifier.
+x-evidence:
+  fetched: '2026-08-12'
+  urls:
+  - url: https://reporting-api.jampp.com/v1/graphql
+    status: 401
+  - url: https://auth.jampp.com/v1/oauth/token
+    status: 400

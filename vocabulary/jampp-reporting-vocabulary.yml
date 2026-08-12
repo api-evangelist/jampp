@@ -1,0 +1,438 @@
+generated: '2026-08-12'
+method: derived
+source: https://developers.jampp.com/docs/reporting-api/
+name: Jampp Reporting API pivot vocabulary
+summary: The dimension and metric vocabulary of the Jampp Reporting API pivot query, transcribed field-for-field
+  from the published SpectaQL GraphQL reference. Live introspection against https://reporting-api.jampp.com/v1/graphql
+  is auth-gated (HTTP 401), so this vocabulary is derived from the provider's own published documentation
+  rather than from an introspected schema. No field, type or description was invented.
+graphql_types:
+  dimensions: PivotDimensions
+  metrics: PivotMetrics
+counts:
+  dimensions: 71
+  dimension_arguments: 3
+  metrics: 33
+  metric_arguments: 10
+dimensions:
+- field: ad
+  type: String
+  description: Name of the ad.
+- field: adParameter
+  type: String
+  description: Custom field defined at an ad level to describe the ad.
+- field: adId
+  type: Int
+  description: ID of the ad.
+- field: adSet
+  type: String
+  description: Name of the ad set.
+- field: adSetSubtype
+  type: String
+  description: Subtype of the ad set at ingest time.
+- field: adSetSubtypeQuerytime
+  type: String
+  description: Subtype of the ad set at query time.
+- field: adSetId
+  type: Int
+  description: ID of the ad set.
+- field: adSize
+  type: String
+  description: Ad size of each ad.
+- field: adType
+  type: String
+  description: Ad type of each ad.
+- field: advertiser
+  type: String
+  description: Name of the advertiser.
+- field: advertiserId
+  type: Int
+  description: ID of the advertiser.
+- field: advertiserBillingEntity
+  type: String
+  description: Billing entity used for the corresponding campaign.
+- field: advertiserCountryId
+  type: Int
+  description: Country registered for the corresponding advertiser.
+- field: app
+  type: String
+  description: Name of the application.
+- field: appBundle
+  type: String
+  description: Bundle ID of the application that is being advertised.
+- field: appCategory
+  type: String
+  description: Category of the application that is being advertised.
+- field: appId
+  type: Int
+  description: ID of the application that is being advertised.
+- field: appPlatform
+  type: Platform
+  description: OS name of the application that is being advertised (IOS/ANDROID).
+- field: campaign
+  type: String
+  description: Name of the advertised campaign.
+- field: campaignParameter
+  type: String
+  description: Optional field in Silver's campaign form that allows the input of a custom value related
+    to the campaign.
+- field: campaignId
+  type: Int
+  description: ID of the advertised campaign.
+- field: campaignCountry
+  type: String
+  description: Country to which the campaign is associated.
+- field: campaignTrackerType
+  type: CampaignTrackerType
+  description: Type of campaign tracking (SKAD/MMP).
+- field: campaignType
+  type: String
+  description: Type of campaign (UA or RTGT).
+- field: campaignTypeId
+  type: Int
+  description: ID of type of campaign (UA=1 or RTGT=2).
+- field: city
+  type: String
+  description: Name of the geo-located city in which the ad is being shown.
+- field: countryCode
+  type: String
+  description: Code of the country (ISO2) in which the ad is being shown.
+- field: countryName
+  type: String
+  description: Name of the country in which the ad is being shown.
+- field: group
+  type: String
+  description: Name of the group related to an advertised campaign.
+- field: groupParameter
+  type: String
+  description: Optional field in Silver's group form that allows the input of a custom value related to
+    the group.
+- field: groupId
+  type: Int
+  description: ID of the group related to an advertised campaign.
+- field: region
+  type: String
+  description: Name of the geo-located region in which the ad is being shown.
+- field: siteName
+  type: String
+  description: Name of the publisher app. Cannot be queried simultaneously with region, city, dma, zipCode,
+    ad or adId.
+- field: siteCategory
+  type: String
+  description: Appstore category of the publisher app.
+- field: siteSubcategory
+  type: String
+  description: Appstore subcategory of the publisher app.
+- field: siteBundle
+  type: String
+  description: Bundle ID of the publisher app. Cannot be queried simultaneously with region, city, dma,
+    zipCode, ad or adId.
+- field: source
+  type: String
+  description: Name of the exchange in which ads were purchased.
+- field: sourceId
+  type: Int
+  description: ID of the exchange in which ads were purchased.
+- field: dma
+  type: String
+  description: DesignatedMarketArea describes where the consumers watch.
+- field: zipCode
+  type: String
+  description: Identifies a particular postal delivery area.
+- field: campaignGoalType
+  type: String
+  description: Identifies the goal type configured in the campaign.
+- field: campaignGoalValue
+  type: String
+  description: Identifies the goal value configured in the campaign.
+- field: campaignGoalEventId
+  type: String
+  description: Identifies the goal event id configured in the campaign.
+- field: campaignContractualGoalEventId
+  type: String
+  description: Identifies the contractual goal event id configured in the campaign.
+- field: campaignContractualGoalEvents
+  type: String
+  description: Identifies the contractual goal events configured in the campaign.
+- field: campaignContractualGoalMeasurement
+  type: String
+  description: Identifies the contractual goal measurement configured in the campaign.
+- field: campaignContractualGoalMeasurementSource
+  type: String
+  description: Identifies the contractual goal measurement source configured in the campaign.
+- field: campaignContractualGoalType
+  type: String
+  description: Identifies the contractual goal type configured in the campaign.
+- field: campaignContractualGoalValue
+  type: String
+  description: Identifies the contractual goal value configured in the campaign.
+- field: campaignContractualGoalWindow
+  type: String
+  description: Identifies the contractual goal window configured in the campaign.
+- field: adSetTemplate
+  type: String
+  description: Identifies the template id configured in the ad set.
+- field: rewarded
+  type: Int
+  description: Ad category by rewarded.
+- field: skadConversionWindow
+  type: Int
+  description: skad conversion window.
+- field: skadAnon
+  type: Int
+  description: skad anonymity tier.
+- field: deviceType
+  type: String
+  description: Identifies the type of the device (smartphone, tablet, unknown)
+- field: proxyType
+  type: String
+  description: Identifies the type of the proxy
+- field: skadId
+  type: Int
+  description: SKAD ID of the advertised campaign.
+- field: skoverlay
+  type: Int
+  description: Identifies if the ad was shown on a skad overlay.
+- field: skadVersion
+  type: String
+  description: SKAD version used.
+- field: persistentCta
+  type: Int
+  description: Identifies the presence of persistence CTA.
+- field: triplePage
+  type: Int
+  description: Identifies the presence of triplePage.
+- field: inlineInstall
+  type: Int
+  description: Identifies the presence of inline install.
+- field: autostore
+  type: Int
+  description: Identifies the presence of autostore.
+- field: skippable
+  type: Int
+  description: Identifies if the ad allowed to be skipped.
+- field: phase
+  type: String
+  description: Identifies the phase of the secondary impression track video.
+- field: adUrl
+  type: String!
+  description: URL preview of the ad. If it is a video, it will be a thumbnail image.
+- field: adPreviewFormat
+  type: AdPreviewFormat!
+  description: 'Argument of adUrl: the preview format requested.'
+  kind: argument
+- field: date
+  type: DateTime!
+  description: Date of the metrics being reported. Takes a granularity argument.
+- field: granularity
+  type: Granularity
+  description: 'Argument of date: criteria by which to truncate the date (NONE, DAILY, WEEKLY, MONTHLY,
+    QUARTERLY, YEARLY, MILLENNIUM).'
+  kind: argument
+- field: dateToStr
+  type: String!
+  description: Returns a string formatted with the given format, based on the JodaTime Java package.
+- field: formatString
+  type: String
+  description: 'Argument of dateToStr: the JodaTime format string.'
+  kind: argument
+- field: dayOfWeek
+  type: String!
+  description: Day of week of the reported period.
+- field: timeOfDay
+  type: Int!
+  description: Hour of day of the reported period.
+- field: goalType
+  type: String
+  description: Identifies the goal type used (operational or contractual), depending on the quality type
+    being queried.
+metrics:
+- field: impressions
+  type: Long
+  description: Number of ad impressions shown.
+- field: clicks
+  type: Long
+  description: Number of clicks on the ads.
+- field: eviews
+  type: Long
+  description: Number of engaged views on the ads.
+- field: eclicks
+  type: Long
+  description: Number of engaged clicks on the ads.
+- field: cpc
+  type: Float
+  description: Cost per click. Cost is defined as ad spend.
+- field: cpm
+  type: Float
+  description: Cost per thousand impressions. Cost is defined as ad spend.
+- field: ctr
+  type: Float
+  description: Click through rate.
+- field: spend
+  type: Float
+  description: Amount of budget that was spent in that time period.
+- field: uniqueImpressions
+  type: Long
+  description: Has an error rate of 2% on the range of 0 to 1000M impressions,for values greater than
+    1000M the error rate becomes large and the metric unreliable.
+- field: uniqueClicks
+  type: Long
+  description: Unique devices that have clicks 2% error.
+- field: simps
+  type: Long
+  description: Number of secondary impressions shown.
+- field: sourceViewa
+  type: Float
+  description: Vieawability of the ad.
+- field: goalDistancePerc
+  type: Float!
+  description: Distance to the campaign goal, as a percentage. Derived from the attributed key metric.
+- field: bucket
+  type: Float!
+  description: Quality bucket derived from the attributed key metric.
+- field: absoluteCpx
+  type: Float!
+  description: Absolute cost-per-X for the campaign goal, derived from the attributed key metric.
+- field: keyMetricVtaShare
+  type: Float!
+  description: Share of the key metric attributable to view-through (impression) touches.
+- field: keyMetric
+  type: Float
+  description: 'Key metric for quality calculation (CPI -> installs, CPA -> events (with weights), ROAS
+    -> event value (with weight), CPC -> clicks). With assisted: true it is computed from assisted conversions
+    instead (CPC/CPM goals return null); derived fields (absoluteCpx, goalDistancePerc, bucket) always
+    use the attributed key metric.'
+- field: keyMetricVtaImp
+  type: Float
+  description: Key metric restricted to view-through (imp) touch. Internal additive component used to
+    derive keyMetricVtaShare.
+- field: keyMetricVtaTotal
+  type: Float
+  description: Key metric across all touches. Internal additive component used to derive keyMetricVtaShare
+    (the denominator).
+- field: uniqueEvents
+  type: Long
+  description: Unique devices that have events.
+- field: events
+  type: Long
+  description: Number of events attributed.
+- field: billableSpend
+  type: Float
+  description: Spend calculation for CPA/CPI deals.
+- field: eventValue
+  type: Float
+  description: Sum of purchase value related to a purchase event.
+- field: eventsCpa
+  type: Float
+  description: Cost per event. Cost is defined as ad spend.
+- field: eventsRoas
+  type: Float
+  description: Return over ad spend measured through attributed value in a purchase event.
+- field: eventsIte
+  type: Float
+  description: The percentage of every a thousand impressions that converted into an event.
+- field: eventsRate
+  type: Float
+  description: The amount of events divided by installs
+- field: installs
+  type: Long
+  description: Number of attributed installs.
+- field: installsCpi
+  type: Float
+  description: Cost per install. Cost is defined as ad spend.
+- field: installsCvr
+  type: Float
+  description: The percentage of clicks that converted into an install.
+- field: installsIti
+  type: Float
+  description: The percentage of every a thousand impressions that converted into an install.
+- field: uniqueEventsCpa
+  type: Float
+  description: Cost per unique event. Cost is defined as ad spend.
+- field: vtaShare
+  type: Float
+  description: Indicator for the VTA share of the total attributions.
+metric_arguments:
+- argument: assisted
+  type: Boolean!
+  description: When true, the key metric is computed from assisted conversions (installs/events attributed
+    to other media sources but touched by Jampp) instead of attributed ones. CPC/CPM goals have no assisted
+    equivalent and return null. Derived fields (absoluteCpx, goalDistancePerc, bucket) always use the
+    attributed key metric. Default is false.
+- argument: attrSource
+  type: AttrSource!
+  description: Number of events attributed by either ALL, SKAD or MMP attribution sources. Default is
+    ALL.
+- argument: attrTechnique
+  type: AttrTechnique!
+  description: Number of events using either ALL, DETERMINISTIC, PROB techniques used by the MMP. Default
+    is ALL.
+- argument: attrTouch
+  type: AttrTouch!
+  description: Number of events attributed to either ALL, CLICK, EVIEW, ECLICK or IMP attribution touch.
+    Default is ALL.
+- argument: ctaWindow
+  type: Int
+  description: The window measured in hours of period from the click and the event/install.
+- argument: eventId
+  type: Int
+  description: ID of the event that will be used to calculate the total number of attributed events. If
+    undefined, all events are aggregated.
+- argument: hasCv
+  type: Boolean!
+  description: Number of SKAD installs that had a non-null conversion value in it's postback.
+- argument: reinstall
+  type: Boolean!
+  description: Number of SKAD installs that had a reinstall=true in it's postback.
+- argument: skadAttributionFlag
+  type: SkanAttributionFlag!
+  description: Number of events attributed by either ALL, SKAD or MMP attribution sources. Default is
+    ALL.
+- argument: vtaWindow
+  type: Int
+  description: The window measured in hours of period from the impression and the event/install.
+enumerations:
+  Platform:
+  - ANDROID
+  - IOS
+  CampaignType:
+  - UA
+  - RTGT
+  Status:
+  - ACTIVE
+  - PAUSED
+  - ARCHIVED
+  Granularity:
+  - NONE
+  - DAILY
+  - WEEKLY
+  - MONTHLY
+  - QUARTERLY
+  - YEARLY
+  - MILLENNIUM
+  AsyncPivotStatus:
+  - PENDING
+  - QUEUED
+  - RUNNING
+  - READY
+  - UP_FOR_RETRY
+  - FAILED
+  AttrSource:
+  - ALL
+  - MMP
+  - SKAD
+  CohortType:
+  - INSTALL
+  - TOUCH
+  - ATTRIBUTION
+  PostbackTrack:
+  - EVENTS
+  - INSTALLS
+  QualityType:
+  - op
+  - contr
+  - contr_comp
+x-evidence:
+  fetched: '2026-08-12'
+  url: https://developers.jampp.com/docs/reporting-api/
+  http_status: 200

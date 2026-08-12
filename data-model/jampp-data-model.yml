@@ -1,0 +1,186 @@
+generated: '2026-08-12'
+method: derived
+source: https://developers.jampp.com/docs/reporting-api/
+derivation: >-
+  Derived from the id-reference fields and field descriptions of the PivotDimensions type in
+  the published GraphQL reference, plus the AsyncPivot / PivotParams / PostbackShare types.
+  Live introspection is auth-gated (HTTP 401), so no $ref graph was available; every entity
+  and every edge below is anchored to a documented field name and the sentence that
+  describes it. Where the docs state only that two things are "related", the relationship is
+  marked confidence: medium and the wording is quoted rather than sharpened.
+note: >-
+  The Reporting API is read-only analytics over Jampp's ad-serving core. It exposes no
+  CRUD entities — there is no createCampaign, no getAdvertiser. The "entities" below are
+  the reporting projections of objects that are actually created in the Silver dashboard,
+  so the model describes the shape of the reporting join, not a resource API.
+entities:
+- name: Advertiser
+  id_field: advertiserId
+  id_type: Int
+  name_field: advertiser
+  attributes: [advertiserBillingEntity, advertiserCountryId]
+  description: The customer buying media.
+- name: App
+  id_field: appId
+  id_type: Int
+  name_field: app
+  attributes: [appBundle, appCategory, appPlatform]
+  description: The advertised application. appPlatform is the Platform enum (IOS/ANDROID).
+- name: Campaign
+  id_field: campaignId
+  id_type: Int
+  name_field: campaign
+  attributes:
+  - campaignParameter
+  - campaignCountry
+  - campaignType
+  - campaignTypeId
+  - campaignTrackerType
+  - campaignGoalType
+  - campaignGoalValue
+  - campaignGoalEventId
+  - campaignContractualGoalType
+  - campaignContractualGoalValue
+  - campaignContractualGoalEventId
+  - campaignContractualGoalEvents
+  - campaignContractualGoalMeasurement
+  - campaignContractualGoalMeasurementSource
+  - campaignContractualGoalWindow
+  - skadId
+  description: An advertised campaign. campaignType is UA (user acquisition) or RTGT (retargeting), ids 1 and 2.
+- name: Group
+  id_field: groupId
+  id_type: Int
+  name_field: group
+  attributes: [groupParameter]
+  description: '"Name of the group related to an advertised campaign." Configured in Silver''s group form.'
+- name: AdSet
+  id_field: adSetId
+  id_type: Int
+  name_field: adSet
+  attributes: [adSetSubtype, adSetSubtypeQuerytime, adSetTemplate]
+  description: A set of ads. Subtype is recorded both at ingest time and at query time.
+- name: Ad
+  id_field: adId
+  id_type: Int
+  name_field: ad
+  attributes: [adParameter, adSize, adType, adUrl, rewarded, skippable, persistentCta, triplePage, inlineInstall, autostore, skoverlay]
+  description: An individual creative. adUrl returns a preview (a thumbnail for video).
+- name: PublisherSite
+  id_field: null
+  name_field: siteName
+  attributes: [siteBundle, siteCategory, siteSubcategory]
+  description: >-
+    The publisher app the ad was shown in. Has no integer id in the reporting vocabulary —
+    it is keyed by name and store bundle. Cannot be queried alongside region, city, dma,
+    zipCode, ad or adId.
+- name: Exchange
+  id_field: sourceId
+  id_type: Int
+  name_field: source
+  description: The exchange the impression was purchased on.
+- name: Event
+  id_field: eventId
+  id_type: Int
+  description: >-
+    An in-app event used as a conversion. Appears only as an argument on the metric fields
+    (events, uniqueEvents, eventsCpa, eventsRoas, eventsIte, eventsRate, vtaShare); if
+    undefined, all events are aggregated.
+- name: AsyncPivot
+  id_field: id
+  id_type: String (UUID)
+  attributes: [userId, status, created, lastUpdated, outputType, url, pivotParams]
+  description: >-
+    A queued report job created by createAsyncPivot. status runs PENDING, QUEUED, RUNNING,
+    READY, UP_FOR_RETRY, FAILED; on READY, url is a signed link to a CSV result and
+    outputType is S3.
+- name: PivotParams
+  id_field: null
+  attributes: [from, to, options, dimensions, metrics, cleanup, granularity, filter, cohortType, cohortWindow, context]
+  description: The captured request of an async pivot, echoed back on the AsyncPivot.
+relationships:
+- from: Advertiser
+  to: Campaign
+  type: has_many
+  via: advertiserId
+  confidence: high
+  evidence: 'advertiserBillingEntity is "billing entity used for the corresponding campaign".'
+- from: Advertiser
+  to: App
+  type: has_many
+  via: appId
+  confidence: medium
+  evidence: App is described as "the application that is being advertised"; the docs do not state the ownership edge explicitly.
+- from: Campaign
+  to: App
+  type: belongs_to
+  via: appId
+  confidence: medium
+  evidence: Campaigns advertise an app; both appear as co-queryable dimensions on the same pivot row.
+- from: Campaign
+  to: Group
+  type: has_many
+  via: groupId
+  confidence: high
+  evidence: '"Name of the group related to an advertised campaign."'
+- from: Group
+  to: AdSet
+  type: has_many
+  via: adSetId
+  confidence: medium
+  evidence: Both are Silver configuration objects returned on the same reporting row; the docs do not spell out the containment.
+- from: AdSet
+  to: Ad
+  type: has_many
+  via: adId
+  confidence: high
+  evidence: adSet is "name of the ad set" and adSize/adType are "of each ad" within it.
+- from: Campaign
+  to: Event
+  type: has_one
+  via: campaignGoalEventId
+  confidence: high
+  evidence: '"Identifies the goal event id configured in the campaign."'
+- from: Campaign
+  to: Event
+  type: has_many
+  via: campaignContractualGoalEvents
+  confidence: high
+  evidence: '"Identifies the contractual goal events configured in the campaign."'
+- from: Impression
+  to: PublisherSite
+  type: belongs_to
+  via: siteBundle
+  confidence: high
+  evidence: siteBundle is "bundle ID of the publisher app".
+- from: Impression
+  to: Exchange
+  type: belongs_to
+  via: sourceId
+  confidence: high
+  evidence: '"Name of the exchange in which ads were purchased."'
+- from: AsyncPivot
+  to: PivotParams
+  type: has_one
+  via: pivotParams
+  confidence: high
+  evidence: AsyncPivot.pivotParams in the published type reference.
+geo_and_device_facets:
+  note: >-
+    Not entities — flat facets of the impression: countryCode (ISO2), countryName, region,
+    city, dma, zipCode, deviceType, proxyType.
+attribution_facets:
+  note: >-
+    SKAdNetwork and MMP attribution is modelled as metric ARGUMENTS rather than entities.
+  arguments: [attrSource, attrTouch, attrTechnique, skadAttributionFlag, vtaWindow, ctaWindow, hasCv, reinstall, assisted]
+  campaign_level_fields: [campaignTrackerType, skadId, skadVersion, skadConversionWindow, skadAnon]
+id_prefixes:
+  note: All reporting ids are bare integers except AsyncPivot.id, which is a UUID string (documented example 3a818623-25f1-4b2b-ae07-67d09c173ed6). No prefixed id scheme is used.
+render: null
+cross_links:
+  vocabulary: vocabulary/jampp-reporting-vocabulary.yml
+  conventions: conventions/jampp-conventions.yml
+x-evidence:
+  fetched: '2026-08-12'
+  url: https://developers.jampp.com/docs/reporting-api/
+  http_status: 200

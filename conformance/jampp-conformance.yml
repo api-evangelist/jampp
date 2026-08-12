@@ -1,0 +1,115 @@
+generated: '2026-08-12'
+method: searched
+source: https://developers.jampp.com/docs/reporting-api/
+probe_sources:
+- https://auth.jampp.com/.well-known/oauth-authorization-server
+- https://auth.jampp.com/.well-known/oauth-protected-resource
+- https://api.jampp.com/.well-known/oauth-protected-resource
+- https://auth.jampp.com/.well-known/jwks.json
+- https://www.jampp.com/privacy-policy-terms-and-conditions
+standards:
+- id: graphql
+  conforms: true
+  evidence: >-
+    Single GraphQL endpoint at https://reporting-api.jampp.com/v1/graphql with queries
+    (pivot, asyncPivot, asyncPivots, postbackShare) and one mutation (createAsyncPivot);
+    fragments, selection sets and typed enums documented in the published reference.
+- id: graphql-introspection
+  conforms: false
+  evidence: >-
+    POST of {__schema{queryType{name}}} returns HTTP 401 "Neither Cookie nor Authorization
+    present." Introspection is auth-gated, so the machine-readable schema is not
+    anonymously retrievable; only the human reference is public.
+- id: oauth2
+  conforms: true
+  evidence: 'OAuth 2.0 client credentials grant documented; token endpoint https://auth.jampp.com/v1/oauth/token returns access_token/token_type/expires_in.'
+- id: rfc6749-client-credentials
+  conforms: true
+  evidence: grant_type=client_credentials with form-encoded client_id/client_secret; Bearer token with expires_in 7200.
+- id: rfc6750-bearer-token
+  conforms: true
+  evidence: 'Token is sent as Authorization: Bearer {access_token}; bearer_methods_supported is ["header"] in the protected-resource metadata.'
+- id: rfc8414-authorization-server-metadata
+  conforms: true
+  evidence: https://auth.jampp.com/.well-known/oauth-authorization-server returns 200 with issuer, authorization_endpoint, token_endpoint, registration_endpoint, jwks_uri, response_types_supported, grant_types_supported, code_challenge_methods_supported.
+- id: rfc9728-protected-resource-metadata
+  conforms: true
+  evidence: https://api.jampp.com/.well-known/oauth-protected-resource and https://auth.jampp.com/.well-known/oauth-protected-resource both return 200 with resource, authorization_servers and bearer_methods_supported.
+- id: rfc7636-pkce
+  conforms: true
+  partial: true
+  evidence: code_challenge_methods_supported ["S256"] advertised in the authorization-server metadata. Applies to the authorization-code flow, which is not documented for API developers.
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  partial: true
+  evidence: registration_endpoint https://auth.jampp.com/v1/oauth/register advertised in the authorization-server metadata; no developer documentation describes its use.
+- id: rfc7517-jwks
+  conforms: true
+  evidence: https://auth.jampp.com/.well-known/jwks.json returns two ES256 keys (kid v1, v2) on the secp256k1 curve.
+- id: openid-connect-discovery
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on every Jampp host. OAuth only, not OIDC.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'Error bodies are proprietary — {"error":"..."} on reporting-api and {"error":{"message":"..."}} on auth; no application/problem+json anywhere.'
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on jampp.com, developers.jampp.com, api.jampp.com, auth.jampp.com and reporting-api.jampp.com.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No deprecation or sunset policy is published; no Sunset header commitment.
+- id: openapi
+  conforms: false
+  evidence: 'No OpenAPI/Swagger document at any probed path on the docs host or the API host roots (/openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs, /docs, /redoc all miss).'
+- id: asyncapi
+  conforms: false
+  evidence: No event, streaming or webhook surface is published; Jampp receives postbacks from MMPs rather than emitting them to developers.
+- id: a2a-agent-card
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json return 404 on every Jampp host except app.jampp.com, which answers 200 with an HTML login page for every path (SPA catch-all, not a card).
+- id: iab-europe-obia
+  conforms: true
+  claimed: true
+  evidence: >-
+    The privacy policy states adherence to the IAB Europe principles on online behavioural
+    advertising and points users at the YourOnlineChoices opt-out platform.
+  source: https://www.jampp.com/privacy-policy-terms-and-conditions
+- id: ccpa-cpra
+  conforms: true
+  claimed: true
+  evidence: >-
+    Privacy policy documents California Consumer Privacy Act / California Privacy Rights Act
+    rights and a "Do not Sell or Share my Personal Information" request path via
+    dataprivacy@jampp.com.
+  source: https://www.jampp.com/privacy-policy-terms-and-conditions
+- id: gdpr
+  conforms: true
+  claimed: true
+  evidence: EEA/UK/Switzerland data-subject rights and opt-out routes documented in the privacy policy.
+  source: https://www.jampp.com/privacy-policy-terms-and-conditions
+- id: eu-us-privacy-shield
+  conforms: false
+  claimed: true
+  evidence: >-
+    The privacy policy still cites the EU-U.S. and Swiss-U.S. Privacy Shield Frameworks.
+    Privacy Shield was invalidated by Schrems II in July 2020 and superseded by the EU-U.S.
+    Data Privacy Framework in July 2023, so this is a stale transfer-mechanism claim rather
+    than a current conformance.
+  source: https://www.jampp.com/privacy-policy-terms-and-conditions
+certifications_published: []
+certifications_note: >-
+  No SOC 2, ISO 27001, PCI DSS, HIPAA, FedRAMP or CSA STAR claim appears anywhere on
+  jampp.com, and there is no trust centre, security page or compliance page
+  (trust.jampp.com and security.jampp.com do not resolve; /security and /trust 404).
+  Because no certification programme is published, no Compliance pointer is emitted.
+x-evidence:
+  fetched: '2026-08-12'
+  urls:
+  - url: https://auth.jampp.com/.well-known/oauth-authorization-server
+    status: 200
+  - url: https://api.jampp.com/.well-known/oauth-protected-resource
+    status: 200
+  - url: https://reporting-api.jampp.com/v1/graphql
+    status: 401
+  - url: https://www.jampp.com/security
+    status: 404

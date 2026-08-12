@@ -1,0 +1,49 @@
+generated: '2026-08-12'
+method: probed
+source: https://auth.jampp.com/.well-known/oauth-protected-resource
+docs: https://developers.jampp.com/docs/reporting-api/
+note: >-
+  Jampp runs OAuth 2.0 but publishes no scope vocabulary. The authorization-server
+  metadata at auth.jampp.com omits scopes_supported entirely, and both protected-resource
+  metadata documents advertise a single scope value of "." — a wildcard placeholder, not a
+  named permission. The developer documentation never mentions a scope parameter: the
+  client-credentials request carries only grant_type, client_id and client_secret, and
+  authorization is bound to the user account that issued the credential pair rather than to
+  a requested scope. Recorded as an honest zero-scope surface; nothing was inferred.
+schemes:
+- name: OAuth2ClientCredentials
+  token_url: https://auth.jampp.com/v1/oauth/token
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.jampp.com/v1/oauth/token
+    scopes: {}
+  - flow: authorizationCode
+    authorizationUrl: https://auth.jampp.com/v1/oauth/authorize
+    tokenUrl: https://auth.jampp.com/v1/oauth/token
+    scopes: {}
+    note: Advertised in RFC 8414 metadata only; not documented for developers.
+scopes:
+- scope: '.'
+  description: >-
+    The only value advertised in scopes_supported by the RFC 9728 protected-resource
+    metadata for both https://api.jampp.com and https://auth.jampp.com. A placeholder
+    wildcard, not a documented permission; no scope-to-capability mapping is published.
+  flows: []
+  sources:
+  - https://api.jampp.com/.well-known/oauth-protected-resource
+  - https://auth.jampp.com/.well-known/oauth-protected-resource
+scope_count: 0
+authorization_model: >-
+  Data visibility follows the dashboard user that minted the credential — a token can read
+  the reporting data of the advertiser accounts that user can see. Jampp exposes no
+  per-scope narrowing; the documented isolation mechanism is issuing one credential pair
+  per integrating service so it can be revoked independently.
+x-evidence:
+  fetched: '2026-08-12'
+  urls:
+  - url: https://auth.jampp.com/.well-known/oauth-authorization-server
+    status: 200
+    scopes_supported: absent
+  - url: https://api.jampp.com/.well-known/oauth-protected-resource
+    status: 200
+    scopes_supported: ['.']

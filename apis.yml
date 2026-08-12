@@ -1,19 +1,68 @@
 aid: jampp
 name: Jampp
-description: Jampp is a company surfaced via the API Evangelist marketing integration graph — named as
-  an integration by 2 members of the programmable-marketing cohort — and added to the network as a stub
-  for full-pipeline profiling.
+description: 'Jampp is a programmatic demand-side platform for mobile app growth, founded in 2013 and
+  now an Affle company, with hubs in San Francisco, Buenos Aires, Sao Paulo and Singapore. It buys user
+  acquisition, app retargeting and CTV inventory on behalf of app advertisers in commerce, fintech, gaming
+  and delivery, and reports the resulting funnel — impressions, clicks, installs and in-app events — back
+  to customers. Its one public developer surface is the Jampp Reporting API, a GraphQL endpoint that
+  serves synchronous and asynchronous "pivot" reports across roughly seventy campaign, creative, geo,
+  publisher and SKAdNetwork dimensions, authenticated with OAuth 2.0 client credentials issued from the
+  Silver dashboard.'
+image: https://cdn.prod.website-files.com/60a2dbe1d34866625cde6145/60a3205afb51116f7b844c73_jampp-featured-image.png
 url: https://raw.githubusercontent.com/api-evangelist/jampp/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:marketing-integration-graph
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-12'
 modified: '2026-08-12'
 tags:
 - Company
-apis: []
+- Advertising
+- Marketing
+- Mobile
+- Analytics
+- Reporting
+- GraphQL
+- Demand-Side Platform
+- App Marketing
+- Attribution
+apis:
+- name: Jampp Reporting API
+  description: 'GraphQL reporting API for Jampp advertisers. The pivot query returns funnel metrics —
+    impressions, clicks, spend, installs, events, CPC/CPM/CTR/CPI/CPA/ROAS — grouped by any combination
+    of documented dimensions (campaign, ad, ad set, advertiser, app, country, region, city, publisher
+    site, device platform, SKAdNetwork attribution flags). Large reports run asynchronously through the
+    createAsyncPivot mutation and are collected as a signed CSV URL once the async pivot reaches READY.
+    The postbackShare query analyses the distribution of postback values. Authentication is OAuth 2.0
+    client credentials against auth.jampp.com.'
+  humanURL: https://developers.jampp.com/docs/reporting-api/
+  baseURL: https://reporting-api.jampp.com/v1/graphql
+  tags:
+  - Reporting
+  - Analytics
+  - GraphQL
+  - Advertising
+  properties:
+  - type: Documentation
+    url: https://developers.jampp.com/docs/reporting-api/
+  - type: APIReference
+    url: https://developers.jampp.com/docs/reporting-api/
+  - type: Authentication
+    url: authentication/jampp-authentication.yml
+  - type: OAuthScopes
+    url: scopes/jampp-scopes.yml
+  - type: ErrorCatalog
+    url: errors/jampp-problem-types.yml
+  - type: Conventions
+    url: conventions/jampp-conventions.yml
+  - type: DataModel
+    url: data-model/jampp-data-model.yml
+  - type: Vocabulary
+    url: vocabulary/jampp-reporting-vocabulary.yml
+  - type: RateLimits
+    url: rate-limits/jampp-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/jampp-lifecycle.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -22,7 +71,66 @@ maintainers:
 common:
 - type: Website
   url: https://jampp.com/
+- type: DeveloperPortal
+  url: https://developers.jampp.com/docs/
+- type: Documentation
+  url: https://developers.jampp.com/docs/reporting-api/
+- type: APIReference
+  url: https://developers.jampp.com/docs/reporting-api/
+- type: GettingStarted
+  url: https://developers.jampp.com/docs/reporting-api-client/usage.html
+- type: Support
+  url: https://www.jampp.com/contact
+- type: Blog
+  url: https://www.jampp.com/blog
+- type: GitHubOrganization
+  url: https://github.com/jampp
+- type: SignUp
+  url: https://auth.jampp.com/login
+- type: TermsOfService
+  url: https://www.jampp.com/advertisers-terms-and-conditions
+- type: PrivacyPolicy
+  url: https://www.jampp.com/privacy-policy-terms-and-conditions
+- type: ChangeLog
+  url: changelog/jampp-changelog.yml
+- type: Packages
+  url: packages/jampp-packages.yml
+- type: SDKs
+  url: packages/jampp-packages.yml
+- type: WellKnown
+  url: well-known/jampp-well-known.yml
+- type: Authentication
+  url: authentication/jampp-authentication.yml
+- type: OAuthScopes
+  url: scopes/jampp-scopes.yml
+- type: Conformance
+  url: conformance/jampp-conformance.yml
+- type: ErrorCatalog
+  url: errors/jampp-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/jampp-lifecycle.yml
+- type: Conventions
+  url: conventions/jampp-conventions.yml
+- type: DataModel
+  url: data-model/jampp-data-model.yml
+- type: Vocabulary
+  url: vocabulary/jampp-reporting-vocabulary.yml
+- type: RateLimits
+  url: rate-limits/jampp-rate-limits.yml
+- type: Plans
+  url: plans/jampp-plans-pricing.yml
+- type: DomainSecurity
+  url: security/jampp-domain-security.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/jampp-llms.txt
 x-vouched-by:
 - Improvado
 - mParticle
 x-vouch-count: 2
+x-enrichment:
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1

@@ -1,0 +1,59 @@
+generated: '2026-08-12'
+method: searched
+source: https://pypi.org/pypi/jampp-reporting-api-client/json
+docs: https://developers.jampp.com/docs/reporting-api-client/
+note: >-
+  One first-party client library. Registries probed with no Jampp result: npm (jampp,
+  @jampp/sdk, jampp-sdk all 404), RubyGems, crates.io, Packagist, NuGet, Maven Central,
+  pkg.go.dev. The github.com/jampp organisation is otherwise infrastructure forks
+  (superset, trino-python-client, pydruid, ansible roles) rather than API clients.
+packages:
+- language: python
+  registry: pypi
+  name: jampp_reporting_api_client
+  url: https://pypi.org/project/jampp-reporting-api-client/
+  repository: https://github.com/jampp/reporting-api-client
+  install: pip install jampp_reporting_api_client
+  install_extras: pip install jampp_reporting_api_client[pandas]
+  official: true
+  api: Jampp Reporting API
+  version: 0.3.2
+  published: '2026-06-01'
+  first_published: '2022-09-12'
+  release_count: 2
+  entry_point: reporting_api_client.client.ReportingAPIClient
+  auth: OAuth 2.0 client credentials (client_id + client_secret passed to the constructor)
+  capabilities:
+  - query() — execute a raw GraphQL query against the Reporting API and return dicts
+  - pivot() — build a pivot query from parameters; returns a pandas DataFrame with the pandas extra
+  note: >-
+    Registry currency and documentation currency disagree. PyPI serves 0.3.2 published
+    2026-06-01, but the hosted documentation at developers.jampp.com still builds and
+    labels itself 0.3.0 and its changelog stops at v0.3.0 (2022-09-12), so a reader of the
+    official docs cannot tell what changed in the version pip actually installs.
+package_count: 1
+official_count: 1
+registries_probed:
+- registry: pypi
+  result: 1 package (jampp-reporting-api-client)
+- registry: npm
+  result: none
+- registry: rubygems
+  result: none
+- registry: crates.io
+  result: none
+- registry: packagist
+  result: none
+- registry: nuget
+  result: none
+- registry: maven-central
+  result: none
+- registry: pkg.go.dev
+  result: none
+x-evidence:
+  fetched: '2026-08-12'
+  urls:
+  - url: https://pypi.org/pypi/jampp-reporting-api-client/json
+    status: 200
+  - url: https://registry.npmjs.org/jampp
+    status: 404

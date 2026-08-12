@@ -1,0 +1,162 @@
+generated: '2026-08-12'
+method: searched
+source: live probes of /.well-known/* on every Jampp host named in apis.yml
+summary: >-
+  Jampp serves a real RFC 8414 OAuth 2.0 Authorization Server Metadata document at
+  auth.jampp.com and RFC 9728 OAuth 2.0 Protected Resource Metadata at both
+  auth.jampp.com and api.jampp.com, plus a JWKS. No security.txt, no OpenID
+  Connect discovery document, no api-catalog, no ai-plugin.json and no A2A agent
+  card were found on any host.
+caution: >-
+  app.jampp.com answers HTTP 200 with the same 7,786-byte "Log in to Jampp's platform"
+  HTML login page for EVERY /.well-known/* path probed, including agent-card.json and
+  agent.json. That is a single-page-app catch-all, not a served document, and every
+  app.jampp.com row below is recorded as a miss.
+hosts:
+- host: https://auth.jampp.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    spec: RFC 8414
+    file: jampp-oauth-authorization-server.json
+    content_type: application/json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    spec: RFC 9728
+    file: jampp-auth-oauth-protected-resource.json
+    content_type: application/json
+  - path: /.well-known/jwks.json
+    status: 200
+    spec: RFC 7517
+    file: jampp-jwks.json
+    content_type: application/json
+    note: Two ES256 signing keys on the secp256k1 curve, kid v1 and v2.
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.jampp.com
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    spec: RFC 9728
+    file: jampp-api-oauth-protected-resource.json
+    content_type: application/json
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://reporting-api.jampp.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://developers.jampp.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://www.jampp.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://app.jampp.com
+  note: >-
+    Every path returned HTTP 200 with an identical 7,786-byte HTML login page.
+    SPA catch-all — recorded as a miss on all paths, no document served.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    document: false
+    body: html-login-shell
+  - path: /.well-known/openid-configuration
+    status: 200
+    document: false
+    body: html-login-shell
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    document: false
+    body: html-login-shell
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    document: false
+    body: html-login-shell
+  - path: /.well-known/api-catalog
+    status: 200
+    document: false
+    body: html-login-shell
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    document: false
+    body: html-login-shell
+  - path: /.well-known/agent-card.json
+    status: 200
+    document: false
+    body: html-login-shell
+  - path: /.well-known/agent.json
+    status: 200
+    document: false
+    body: html-login-shell
+x-evidence:
+  fetched: '2026-08-12'
+  hosts_probed: 7
+  paths_probed_per_host: 8
+  documents_found: 4
