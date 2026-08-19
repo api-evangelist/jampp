@@ -12,7 +12,7 @@ image: https://cdn.prod.website-files.com/60a2dbe1d34866625cde6145/60a3205afb511
 url: https://raw.githubusercontent.com/api-evangelist/jampp/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:marketing-integration-graph
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-12'
 modified: '2026-08-12'
 tags:
