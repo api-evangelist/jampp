@@ -8,6 +8,17 @@ description: 'Jampp is a programmatic demand-side platform for mobile app growth
   serves synchronous and asynchronous "pivot" reports across roughly seventy campaign, creative, geo,
   publisher and SKAdNetwork dimensions, authenticated with OAuth 2.0 client credentials issued from the
   Silver dashboard.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.prod.website-files.com/60a2dbe1d34866625cde6145/60a3205afb51116f7b844c73_jampp-featured-image.png
 url: https://raw.githubusercontent.com/api-evangelist/jampp/refs/heads/main/apis.yml
 x-type: company
