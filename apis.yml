@@ -1,13 +1,14 @@
 aid: jampp
+
 name: Jampp
-description: 'Jampp is a programmatic demand-side platform for mobile app growth, founded in 2013 and
-  now an Affle company, with hubs in San Francisco, Buenos Aires, Sao Paulo and Singapore. It buys user
-  acquisition, app retargeting and CTV inventory on behalf of app advertisers in commerce, fintech, gaming
-  and delivery, and reports the resulting funnel — impressions, clicks, installs and in-app events — back
-  to customers. Its one public developer surface is the Jampp Reporting API, a GraphQL endpoint that
-  serves synchronous and asynchronous "pivot" reports across roughly seventy campaign, creative, geo,
-  publisher and SKAdNetwork dimensions, authenticated with OAuth 2.0 client credentials issued from the
-  Silver dashboard.'
+
+description: Jampp is a programmatic demand-side platform for mobile app growth, founded in 2013 and now an Affle company, with hubs in San Francisco,
+  Buenos Aires, Sao Paulo and Singapore. It buys user acquisition, app retargeting and CTV inventory on behalf of app advertisers in commerce,
+  fintech, gaming and delivery, and reports the resulting funnel — impressions, clicks, installs and in-app events — back to customers. Its one
+  public developer surface is the Jampp Reporting API, a GraphQL endpoint that serves synchronous and asynchronous "pivot" reports across roughly
+  seventy campaign, creative, geo, publisher and SKAdNetwork dimensions, authenticated with OAuth 2.0 client credentials issued from the Silver
+  dashboard.
+
 deliveryModel:
   model: saas
   open_source: false
@@ -19,6 +20,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -34,13 +36,21 @@ accessModel:
   - security
   generated: '2026-09-02'
   method: derived
+
 image: https://cdn.prod.website-files.com/60a2dbe1d34866625cde6145/60a3205afb51116f7b844c73_jampp-featured-image.png
+
 url: https://raw.githubusercontent.com/api-evangelist/jampp/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:marketing-integration-graph
+
 specificationVersion: '0.23'
+
 created: '2026-08-12'
+
 modified: '2026-08-12'
+
 tags:
 - Company
 - Advertising
@@ -52,6 +62,7 @@ tags:
 - DSP
 - App Marketing
 - Attribution
+
 tags_raw:
 - Company
 - Advertising
@@ -63,49 +74,22 @@ tags_raw:
 - Demand-Side Platform
 - App Marketing
 - Attribution
-apis:
-- name: Jampp Reporting API
-  description: 'GraphQL reporting API for Jampp advertisers. The pivot query returns funnel metrics —
-    impressions, clicks, spend, installs, events, CPC/CPM/CTR/CPI/CPA/ROAS — grouped by any combination
-    of documented dimensions (campaign, ad, ad set, advertiser, app, country, region, city, publisher
-    site, device platform, SKAdNetwork attribution flags). Large reports run asynchronously through the
-    createAsyncPivot mutation and are collected as a signed CSV URL once the async pivot reaches READY.
-    The postbackShare query analyses the distribution of postback values. Authentication is OAuth 2.0
-    client credentials against auth.jampp.com.'
-  humanURL: https://developers.jampp.com/docs/reporting-api/
-  baseURL: https://reporting-api.jampp.com/v1/graphql
-  tags:
-  - Reporting
-  - Analytics
-  - GraphQL
-  - Advertising
-  properties:
-  - type: Documentation
-    url: https://developers.jampp.com/docs/reporting-api/
-  - type: APIReference
-    url: https://developers.jampp.com/docs/reporting-api/
-  - type: Authentication
-    url: authentication/jampp-authentication.yml
-  - type: OAuthScopes
-    url: scopes/jampp-scopes.yml
-  - type: ErrorCatalog
-    url: errors/jampp-problem-types.yml
-  - type: Conventions
-    url: conventions/jampp-conventions.yml
-  - type: DataModel
-    url: data-model/jampp-data-model.yml
-  - type: Vocabulary
-    url: vocabulary/jampp-reporting-vocabulary.yml
-  - type: RateLimits
-    url: rate-limits/jampp-rate-limits.yml
-  - type: Lifecycle
-    url: lifecycle/jampp-lifecycle.yml
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: Deprecation
+  url: lifecycle/jampp-lifecycle.yml
+- type: Hosts
+  url: hosts/jampp-hosts.yml
+- type: IntegrationEdges
+  url: integrations/jampp-integration-edges.yml
+- type: Vendors
+  url: vendors/jampp-vendors.yml
 - type: Website
   url: https://jampp.com/
 - type: DeveloperPortal
@@ -136,14 +120,10 @@ common:
   url: packages/jampp-packages.yml
 - type: WellKnown
   url: well-known/jampp-well-known.yml
-- type: Authentication
-  url: authentication/jampp-authentication.yml
 - type: OAuthScopes
   url: scopes/jampp-scopes.yml
 - type: Conformance
   url: conformance/jampp-conformance.yml
-- type: ErrorCatalog
-  url: errors/jampp-problem-types.yml
 - type: Lifecycle
   url: lifecycle/jampp-lifecycle.yml
 - type: Conventions
@@ -160,14 +140,61 @@ common:
   url: security/jampp-domain-security.yml
 - type: AgentSkill
   url: skills/_index.yml
-- type: LLMsTxt
-  url: llms/jampp-llms.txt
+
+apis:
+- name: Jampp Reporting API
+  description: GraphQL reporting API for Jampp advertisers. The pivot query returns funnel metrics — impressions, clicks, spend, installs, events,
+    CPC/CPM/CTR/CPI/CPA/ROAS — grouped by any combination of documented dimensions (campaign, ad, ad set, advertiser, app, country, region, city,
+    publisher site, device platform, SKAdNetwork attribution flags). Large reports run asynchronously through the createAsyncPivot mutation and
+    are collected as a signed CSV URL once the async pivot reaches READY. The postbackShare query analyses the distribution of postback values.
+    Authentication is OAuth 2.0 client credentials against auth.jampp.com.
+  humanURL: https://developers.jampp.com/docs/reporting-api/
+  baseURL: https://reporting-api.jampp.com/v1/graphql
+  tags:
+  - Reporting
+  - Analytics
+  - GraphQL
+  - Advertising
+  properties:
+  - type: Documentation
+    url: https://developers.jampp.com/docs/reporting-api/
+  - type: APIReference
+    url: https://developers.jampp.com/docs/reporting-api/
+  - type: OAuthScopes
+    url: scopes/jampp-scopes.yml
+  - type: Conventions
+    url: conventions/jampp-conventions.yml
+  - type: DataModel
+    url: data-model/jampp-data-model.yml
+  - type: Vocabulary
+    url: vocabulary/jampp-reporting-vocabulary.yml
+  - type: RateLimits
+    url: rate-limits/jampp-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/jampp-lifecycle.yml
+  aid: jampp:jampp-reporting-api
+
 x-vouched-by:
 - Improvado
 - mParticle
+
 x-vouch-count: 2
+
+x-coverage:
+  state: gated
+  reason: partner-login
+  method: derived
+  generated: '2026-10-20'
+  generator: derive-coverage.py (pre-flight evidence)
+  detail: >-
+    the company serves an API surface but requires credentials before any description of it can be read
+  evidence:
+  - url: https://api.jampp.com/mcp/v1
+    status: 401
+  - url: https://jampp.com/
+    status: 200
 x-enrichment:
-  date: '2026-08-12'
+  date: '2026-10-20'
   status: enriched
-  artifacts_added: 23
-  pass: local-v1
+  artifacts_added: 0
+  pass: local-v5

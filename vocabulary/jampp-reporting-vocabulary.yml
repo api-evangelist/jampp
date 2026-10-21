@@ -4,8 +4,8 @@ source: https://developers.jampp.com/docs/reporting-api/
 name: Jampp Reporting API pivot vocabulary
 summary: The dimension and metric vocabulary of the Jampp Reporting API pivot query, transcribed field-for-field
   from the published SpectaQL GraphQL reference. Live introspection against https://reporting-api.jampp.com/v1/graphql
-  is auth-gated (HTTP 401), so this vocabulary is derived from the provider's own published documentation
-  rather than from an introspected schema. No field, type or description was invented.
+  is auth-gated (HTTP 401), so this vocabulary is derived from the provider's own published documentation rather
+  than from an introspected schema. No field, type or description was invented.
 graphql_types:
   dimensions: PivotDimensions
   metrics: PivotMetrics
@@ -74,8 +74,7 @@ dimensions:
   description: Name of the advertised campaign.
 - field: campaignParameter
   type: String
-  description: Optional field in Silver's campaign form that allows the input of a custom value related
-    to the campaign.
+  description: Optional field in Silver's campaign form that allows the input of a custom value related to the campaign.
 - field: campaignId
   type: Int
   description: ID of the advertised campaign.
@@ -105,8 +104,7 @@ dimensions:
   description: Name of the group related to an advertised campaign.
 - field: groupParameter
   type: String
-  description: Optional field in Silver's group form that allows the input of a custom value related to
-    the group.
+  description: Optional field in Silver's group form that allows the input of a custom value related to the group.
 - field: groupId
   type: Int
   description: ID of the group related to an advertised campaign.
@@ -115,8 +113,8 @@ dimensions:
   description: Name of the geo-located region in which the ad is being shown.
 - field: siteName
   type: String
-  description: Name of the publisher app. Cannot be queried simultaneously with region, city, dma, zipCode,
-    ad or adId.
+  description: Name of the publisher app. Cannot be queried simultaneously with region, city, dma, zipCode, ad or
+    adId.
 - field: siteCategory
   type: String
   description: Appstore category of the publisher app.
@@ -125,8 +123,8 @@ dimensions:
   description: Appstore subcategory of the publisher app.
 - field: siteBundle
   type: String
-  description: Bundle ID of the publisher app. Cannot be queried simultaneously with region, city, dma,
-    zipCode, ad or adId.
+  description: Bundle ID of the publisher app. Cannot be queried simultaneously with region, city, dma, zipCode,
+    ad or adId.
 - field: source
   type: String
   description: Name of the exchange in which ads were purchased.
@@ -226,8 +224,8 @@ dimensions:
   description: Date of the metrics being reported. Takes a granularity argument.
 - field: granularity
   type: Granularity
-  description: 'Argument of date: criteria by which to truncate the date (NONE, DAILY, WEEKLY, MONTHLY,
-    QUARTERLY, YEARLY, MILLENNIUM).'
+  description: 'Argument of date: criteria by which to truncate the date (NONE, DAILY, WEEKLY, MONTHLY, QUARTERLY,
+    YEARLY, MILLENNIUM).'
   kind: argument
 - field: dateToStr
   type: String!
@@ -244,8 +242,7 @@ dimensions:
   description: Hour of day of the reported period.
 - field: goalType
   type: String
-  description: Identifies the goal type used (operational or contractual), depending on the quality type
-    being queried.
+  description: Identifies the goal type used (operational or contractual), depending on the quality type being queried.
 metrics:
 - field: impressions
   type: Long
@@ -273,8 +270,8 @@ metrics:
   description: Amount of budget that was spent in that time period.
 - field: uniqueImpressions
   type: Long
-  description: Has an error rate of 2% on the range of 0 to 1000M impressions,for values greater than
-    1000M the error rate becomes large and the metric unreliable.
+  description: Has an error rate of 2% on the range of 0 to 1000M impressions,for values greater than 1000M the
+    error rate becomes large and the metric unreliable.
 - field: uniqueClicks
   type: Long
   description: Unique devices that have clicks 2% error.
@@ -298,18 +295,16 @@ metrics:
   description: Share of the key metric attributable to view-through (impression) touches.
 - field: keyMetric
   type: Float
-  description: 'Key metric for quality calculation (CPI -> installs, CPA -> events (with weights), ROAS
-    -> event value (with weight), CPC -> clicks). With assisted: true it is computed from assisted conversions
-    instead (CPC/CPM goals return null); derived fields (absoluteCpx, goalDistancePerc, bucket) always
-    use the attributed key metric.'
+  description: 'Key metric for quality calculation (CPI -> installs, CPA -> events (with weights), ROAS -> event
+    value (with weight), CPC -> clicks). With assisted: true it is computed from assisted conversions instead (CPC/CPM
+    goals return null); derived fields (absoluteCpx, goalDistancePerc, bucket) always use the attributed key metric.'
 - field: keyMetricVtaImp
   type: Float
-  description: Key metric restricted to view-through (imp) touch. Internal additive component used to
-    derive keyMetricVtaShare.
+  description: Key metric restricted to view-through (imp) touch. Internal additive component used to derive keyMetricVtaShare.
 - field: keyMetricVtaTotal
   type: Float
-  description: Key metric across all touches. Internal additive component used to derive keyMetricVtaShare
-    (the denominator).
+  description: Key metric across all touches. Internal additive component used to derive keyMetricVtaShare (the
+    denominator).
 - field: uniqueEvents
   type: Long
   description: Unique devices that have events.
@@ -355,29 +350,27 @@ metrics:
 metric_arguments:
 - argument: assisted
   type: Boolean!
-  description: When true, the key metric is computed from assisted conversions (installs/events attributed
-    to other media sources but touched by Jampp) instead of attributed ones. CPC/CPM goals have no assisted
-    equivalent and return null. Derived fields (absoluteCpx, goalDistancePerc, bucket) always use the
-    attributed key metric. Default is false.
+  description: When true, the key metric is computed from assisted conversions (installs/events attributed to other
+    media sources but touched by Jampp) instead of attributed ones. CPC/CPM goals have no assisted equivalent and
+    return null. Derived fields (absoluteCpx, goalDistancePerc, bucket) always use the attributed key metric. Default
+    is false.
 - argument: attrSource
   type: AttrSource!
-  description: Number of events attributed by either ALL, SKAD or MMP attribution sources. Default is
-    ALL.
+  description: Number of events attributed by either ALL, SKAD or MMP attribution sources. Default is ALL.
 - argument: attrTechnique
   type: AttrTechnique!
-  description: Number of events using either ALL, DETERMINISTIC, PROB techniques used by the MMP. Default
-    is ALL.
+  description: Number of events using either ALL, DETERMINISTIC, PROB techniques used by the MMP. Default is ALL.
 - argument: attrTouch
   type: AttrTouch!
-  description: Number of events attributed to either ALL, CLICK, EVIEW, ECLICK or IMP attribution touch.
-    Default is ALL.
+  description: Number of events attributed to either ALL, CLICK, EVIEW, ECLICK or IMP attribution touch. Default
+    is ALL.
 - argument: ctaWindow
   type: Int
   description: The window measured in hours of period from the click and the event/install.
 - argument: eventId
   type: Int
-  description: ID of the event that will be used to calculate the total number of attributed events. If
-    undefined, all events are aggregated.
+  description: ID of the event that will be used to calculate the total number of attributed events. If undefined,
+    all events are aggregated.
 - argument: hasCv
   type: Boolean!
   description: Number of SKAD installs that had a non-null conversion value in it's postback.
@@ -386,8 +379,7 @@ metric_arguments:
   description: Number of SKAD installs that had a reinstall=true in it's postback.
 - argument: skadAttributionFlag
   type: SkanAttributionFlag!
-  description: Number of events attributed by either ALL, SKAD or MMP attribution sources. Default is
-    ALL.
+  description: Number of events attributed by either ALL, SKAD or MMP attribution sources. Default is ALL.
 - argument: vtaWindow
   type: Int
   description: The window measured in hours of period from the impression and the event/install.
@@ -436,3 +428,484 @@ x-evidence:
   fetched: '2026-08-12'
   url: https://developers.jampp.com/docs/reporting-api/
   http_status: 200
+vocabulary:
+  name: Jampp Reporting API pivot vocabulary
+  description: The dimension and metric vocabulary of the Jampp Reporting API pivot query, transcribed field-for-field
+    from the published SpectaQL GraphQL reference. Live introspection against https://reporting-api.jampp.com/v1/graphql
+    is auth-gated (HTTP 401), so this vocabulary is derived from the provider's own published documentation rather
+    than from an introspected schema. No field, type or description was invented.
+  terms:
+  - term: ad
+    definition: Name of the ad.
+    tags:
+    - dimension
+  - term: adParameter
+    definition: Custom field defined at an ad level to describe the ad.
+    tags:
+    - dimension
+  - term: adId
+    definition: ID of the ad.
+    tags:
+    - dimension
+  - term: adSet
+    definition: Name of the ad set.
+    tags:
+    - dimension
+  - term: adSetSubtype
+    definition: Subtype of the ad set at ingest time.
+    tags:
+    - dimension
+  - term: adSetSubtypeQuerytime
+    definition: Subtype of the ad set at query time.
+    tags:
+    - dimension
+  - term: adSetId
+    definition: ID of the ad set.
+    tags:
+    - dimension
+  - term: adSize
+    definition: Ad size of each ad.
+    tags:
+    - dimension
+  - term: adType
+    definition: Ad type of each ad.
+    tags:
+    - dimension
+  - term: advertiser
+    definition: Name of the advertiser.
+    tags:
+    - dimension
+  - term: advertiserId
+    definition: ID of the advertiser.
+    tags:
+    - dimension
+  - term: advertiserBillingEntity
+    definition: Billing entity used for the corresponding campaign.
+    tags:
+    - dimension
+  - term: advertiserCountryId
+    definition: Country registered for the corresponding advertiser.
+    tags:
+    - dimension
+  - term: app
+    definition: Name of the application.
+    tags:
+    - dimension
+  - term: appBundle
+    definition: Bundle ID of the application that is being advertised.
+    tags:
+    - dimension
+  - term: appCategory
+    definition: Category of the application that is being advertised.
+    tags:
+    - dimension
+  - term: appId
+    definition: ID of the application that is being advertised.
+    tags:
+    - dimension
+  - term: appPlatform
+    definition: OS name of the application that is being advertised (IOS/ANDROID).
+    tags:
+    - dimension
+  - term: campaign
+    definition: Name of the advertised campaign.
+    tags:
+    - dimension
+  - term: campaignParameter
+    definition: Optional field in Silver's campaign form that allows the input of a custom value related to the
+      campaign.
+    tags:
+    - dimension
+  - term: campaignId
+    definition: ID of the advertised campaign.
+    tags:
+    - dimension
+  - term: campaignCountry
+    definition: Country to which the campaign is associated.
+    tags:
+    - dimension
+  - term: campaignTrackerType
+    definition: Type of campaign tracking (SKAD/MMP).
+    tags:
+    - dimension
+  - term: campaignType
+    definition: Type of campaign (UA or RTGT).
+    tags:
+    - dimension
+  - term: campaignTypeId
+    definition: ID of type of campaign (UA=1 or RTGT=2).
+    tags:
+    - dimension
+  - term: city
+    definition: Name of the geo-located city in which the ad is being shown.
+    tags:
+    - dimension
+  - term: countryCode
+    definition: Code of the country (ISO2) in which the ad is being shown.
+    tags:
+    - dimension
+  - term: countryName
+    definition: Name of the country in which the ad is being shown.
+    tags:
+    - dimension
+  - term: group
+    definition: Name of the group related to an advertised campaign.
+    tags:
+    - dimension
+  - term: groupParameter
+    definition: Optional field in Silver's group form that allows the input of a custom value related to the group.
+    tags:
+    - dimension
+  - term: groupId
+    definition: ID of the group related to an advertised campaign.
+    tags:
+    - dimension
+  - term: region
+    definition: Name of the geo-located region in which the ad is being shown.
+    tags:
+    - dimension
+  - term: siteName
+    definition: Name of the publisher app. Cannot be queried simultaneously with region, city, dma, zipCode, ad
+      or adId.
+    tags:
+    - dimension
+  - term: siteCategory
+    definition: Appstore category of the publisher app.
+    tags:
+    - dimension
+  - term: siteSubcategory
+    definition: Appstore subcategory of the publisher app.
+    tags:
+    - dimension
+  - term: siteBundle
+    definition: Bundle ID of the publisher app. Cannot be queried simultaneously with region, city, dma, zipCode,
+      ad or adId.
+    tags:
+    - dimension
+  - term: source
+    definition: Name of the exchange in which ads were purchased.
+    tags:
+    - dimension
+  - term: sourceId
+    definition: ID of the exchange in which ads were purchased.
+    tags:
+    - dimension
+  - term: dma
+    definition: DesignatedMarketArea describes where the consumers watch.
+    tags:
+    - dimension
+  - term: zipCode
+    definition: Identifies a particular postal delivery area.
+    tags:
+    - dimension
+  - term: campaignGoalType
+    definition: Identifies the goal type configured in the campaign.
+    tags:
+    - dimension
+  - term: campaignGoalValue
+    definition: Identifies the goal value configured in the campaign.
+    tags:
+    - dimension
+  - term: campaignGoalEventId
+    definition: Identifies the goal event id configured in the campaign.
+    tags:
+    - dimension
+  - term: campaignContractualGoalEventId
+    definition: Identifies the contractual goal event id configured in the campaign.
+    tags:
+    - dimension
+  - term: campaignContractualGoalEvents
+    definition: Identifies the contractual goal events configured in the campaign.
+    tags:
+    - dimension
+  - term: campaignContractualGoalMeasurement
+    definition: Identifies the contractual goal measurement configured in the campaign.
+    tags:
+    - dimension
+  - term: campaignContractualGoalMeasurementSource
+    definition: Identifies the contractual goal measurement source configured in the campaign.
+    tags:
+    - dimension
+  - term: campaignContractualGoalType
+    definition: Identifies the contractual goal type configured in the campaign.
+    tags:
+    - dimension
+  - term: campaignContractualGoalValue
+    definition: Identifies the contractual goal value configured in the campaign.
+    tags:
+    - dimension
+  - term: campaignContractualGoalWindow
+    definition: Identifies the contractual goal window configured in the campaign.
+    tags:
+    - dimension
+  - term: adSetTemplate
+    definition: Identifies the template id configured in the ad set.
+    tags:
+    - dimension
+  - term: rewarded
+    definition: Ad category by rewarded.
+    tags:
+    - dimension
+  - term: skadConversionWindow
+    definition: skad conversion window.
+    tags:
+    - dimension
+  - term: skadAnon
+    definition: skad anonymity tier.
+    tags:
+    - dimension
+  - term: deviceType
+    definition: Identifies the type of the device (smartphone, tablet, unknown)
+    tags:
+    - dimension
+  - term: proxyType
+    definition: Identifies the type of the proxy
+    tags:
+    - dimension
+  - term: skadId
+    definition: SKAD ID of the advertised campaign.
+    tags:
+    - dimension
+  - term: skoverlay
+    definition: Identifies if the ad was shown on a skad overlay.
+    tags:
+    - dimension
+  - term: skadVersion
+    definition: SKAD version used.
+    tags:
+    - dimension
+  - term: persistentCta
+    definition: Identifies the presence of persistence CTA.
+    tags:
+    - dimension
+  - term: triplePage
+    definition: Identifies the presence of triplePage.
+    tags:
+    - dimension
+  - term: inlineInstall
+    definition: Identifies the presence of inline install.
+    tags:
+    - dimension
+  - term: autostore
+    definition: Identifies the presence of autostore.
+    tags:
+    - dimension
+  - term: skippable
+    definition: Identifies if the ad allowed to be skipped.
+    tags:
+    - dimension
+  - term: phase
+    definition: Identifies the phase of the secondary impression track video.
+    tags:
+    - dimension
+  - term: adUrl
+    definition: URL preview of the ad. If it is a video, it will be a thumbnail image.
+    tags:
+    - dimension
+  - term: adPreviewFormat
+    definition: 'Argument of adUrl: the preview format requested.'
+    tags:
+    - dimension
+  - term: date
+    definition: Date of the metrics being reported. Takes a granularity argument.
+    tags:
+    - dimension
+  - term: granularity
+    definition: 'Argument of date: criteria by which to truncate the date (NONE, DAILY, WEEKLY, MONTHLY, QUARTERLY,
+      YEARLY, MILLENNIUM).'
+    tags:
+    - dimension
+  - term: dateToStr
+    definition: Returns a string formatted with the given format, based on the JodaTime Java package.
+    tags:
+    - dimension
+  - term: formatString
+    definition: 'Argument of dateToStr: the JodaTime format string.'
+    tags:
+    - dimension
+  - term: dayOfWeek
+    definition: Day of week of the reported period.
+    tags:
+    - dimension
+  - term: timeOfDay
+    definition: Hour of day of the reported period.
+    tags:
+    - dimension
+  - term: goalType
+    definition: Identifies the goal type used (operational or contractual), depending on the quality type being
+      queried.
+    tags:
+    - dimension
+  - term: impressions
+    definition: Number of ad impressions shown.
+    tags:
+    - metric
+  - term: clicks
+    definition: Number of clicks on the ads.
+    tags:
+    - metric
+  - term: eviews
+    definition: Number of engaged views on the ads.
+    tags:
+    - metric
+  - term: eclicks
+    definition: Number of engaged clicks on the ads.
+    tags:
+    - metric
+  - term: cpc
+    definition: Cost per click. Cost is defined as ad spend.
+    tags:
+    - metric
+  - term: cpm
+    definition: Cost per thousand impressions. Cost is defined as ad spend.
+    tags:
+    - metric
+  - term: ctr
+    definition: Click through rate.
+    tags:
+    - metric
+  - term: spend
+    definition: Amount of budget that was spent in that time period.
+    tags:
+    - metric
+  - term: uniqueImpressions
+    definition: Has an error rate of 2% on the range of 0 to 1000M impressions,for values greater than 1000M the
+      error rate becomes large and the metric unreliable.
+    tags:
+    - metric
+  - term: uniqueClicks
+    definition: Unique devices that have clicks 2% error.
+    tags:
+    - metric
+  - term: simps
+    definition: Number of secondary impressions shown.
+    tags:
+    - metric
+  - term: sourceViewa
+    definition: Vieawability of the ad.
+    tags:
+    - metric
+  - term: goalDistancePerc
+    definition: Distance to the campaign goal, as a percentage. Derived from the attributed key metric.
+    tags:
+    - metric
+  - term: bucket
+    definition: Quality bucket derived from the attributed key metric.
+    tags:
+    - metric
+  - term: absoluteCpx
+    definition: Absolute cost-per-X for the campaign goal, derived from the attributed key metric.
+    tags:
+    - metric
+  - term: keyMetricVtaShare
+    definition: Share of the key metric attributable to view-through (impression) touches.
+    tags:
+    - metric
+  - term: keyMetric
+    definition: 'Key metric for quality calculation (CPI -> installs, CPA -> events (with weights), ROAS -> event
+      value (with weight), CPC -> clicks). With assisted: true it is computed from assisted conversions instead
+      (CPC/CPM goals return null); derived fields (absoluteCpx, goalDistancePerc, bucket) always use the attributed
+      key metric.'
+    tags:
+    - metric
+  - term: keyMetricVtaImp
+    definition: Key metric restricted to view-through (imp) touch. Internal additive component used to derive keyMetricVtaShare.
+    tags:
+    - metric
+  - term: keyMetricVtaTotal
+    definition: Key metric across all touches. Internal additive component used to derive keyMetricVtaShare (the
+      denominator).
+    tags:
+    - metric
+  - term: uniqueEvents
+    definition: Unique devices that have events.
+    tags:
+    - metric
+  - term: events
+    definition: Number of events attributed.
+    tags:
+    - metric
+  - term: billableSpend
+    definition: Spend calculation for CPA/CPI deals.
+    tags:
+    - metric
+  - term: eventValue
+    definition: Sum of purchase value related to a purchase event.
+    tags:
+    - metric
+  - term: eventsCpa
+    definition: Cost per event. Cost is defined as ad spend.
+    tags:
+    - metric
+  - term: eventsRoas
+    definition: Return over ad spend measured through attributed value in a purchase event.
+    tags:
+    - metric
+  - term: eventsIte
+    definition: The percentage of every a thousand impressions that converted into an event.
+    tags:
+    - metric
+  - term: eventsRate
+    definition: The amount of events divided by installs
+    tags:
+    - metric
+  - term: installs
+    definition: Number of attributed installs.
+    tags:
+    - metric
+  - term: installsCpi
+    definition: Cost per install. Cost is defined as ad spend.
+    tags:
+    - metric
+  - term: installsCvr
+    definition: The percentage of clicks that converted into an install.
+    tags:
+    - metric
+  - term: installsIti
+    definition: The percentage of every a thousand impressions that converted into an install.
+    tags:
+    - metric
+  - term: uniqueEventsCpa
+    definition: Cost per unique event. Cost is defined as ad spend.
+    tags:
+    - metric
+  - term: vtaShare
+    definition: Indicator for the VTA share of the total attributions.
+    tags:
+    - metric
+  - term: Platform
+    definition: 'Enumeration: ANDROID, IOS'
+    tags:
+    - enumeration
+  - term: CampaignType
+    definition: 'Enumeration: UA, RTGT'
+    tags:
+    - enumeration
+  - term: Status
+    definition: 'Enumeration: ACTIVE, PAUSED, ARCHIVED'
+    tags:
+    - enumeration
+  - term: Granularity
+    definition: 'Enumeration: NONE, DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY, MILLENNIUM'
+    tags:
+    - enumeration
+  - term: AsyncPivotStatus
+    definition: 'Enumeration: PENDING, QUEUED, RUNNING, READY, UP_FOR_RETRY, FAILED'
+    tags:
+    - enumeration
+  - term: AttrSource
+    definition: 'Enumeration: ALL, MMP, SKAD'
+    tags:
+    - enumeration
+  - term: CohortType
+    definition: 'Enumeration: INSTALL, TOUCH, ATTRIBUTION'
+    tags:
+    - enumeration
+  - term: PostbackTrack
+    definition: 'Enumeration: EVENTS, INSTALLS'
+    tags:
+    - enumeration
+  - term: QualityType
+    definition: 'Enumeration: op, contr, contr_comp'
+    tags:
+    - enumeration

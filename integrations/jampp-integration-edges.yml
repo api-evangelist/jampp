@@ -1,8 +1,15 @@
-generated: '2026-10-14'
+generated: '2026-10-20'
 method: searched
+source:
+- https://docs.mparticle.com/integrations/jampp/event/
+- https://zapier.com/apps/jampp/integrations
+- https://n8n.io/integrations/jampp/
+- https://composio.dev/toolkits/jampp
+- https://monid.ai/tools/jampp
 checked:
 - https://api.nuget.org/v3
 - https://crates.io/api/v1
+- https://docs.mparticle.com/integrations/jampp/audience/
 - https://docs.mparticle.com/integrations/jampp/event/
 - https://proxy.golang.org
 - https://pypi.org/pypi
@@ -10,28 +17,13 @@ checked:
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
 - https://vendor-list.consensu.org/v3/vendor-list.json
+- https://composio.dev/toolkits/jampp
+- https://monid.ai/tools/jampp
+- https://n8n.io/integrations/jampp/
+- https://zapier.com/apps/jampp/integrations
+summary: null
 marketplace_apps: []
 edges:
-- partner_name: mParticle
-  partner: mparticle
-  partner_match: aggregator
-  marketplace: coverage
-  channel: partner-built
-  direction: partner-built
-  type: coverage
-  relationship: connector-coverage
-  evidence: https://docs.mparticle.com/integrations/jampp/event/
-  coverage_role:
-  - destination
-  cdp_signals:
-    destination:
-      catalog_entries:
-      - jampp
-      integration_types:
-      - audience
-      - event
-  detected_by: sweep-cdp.py
-  first_seen: '2026-10-14'
 - partner_name: IAB Europe TCF Global Vendor List
   partner: null
   partner_match: domain
@@ -98,4 +90,24 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
-source: https://docs.mparticle.com/integrations/jampp/event/
+- partner_name: mParticle
+  partner: mparticle
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://docs.mparticle.com/integrations/jampp/audience/
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - jampp
+      integration_types:
+      - audience
+      - event
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
+templates: []

@@ -2,12 +2,12 @@ generated: '2026-08-12'
 method: derived
 status: candidate
 source: https://developers.jampp.com/docs/reporting-api/
-summary: Jampp publishes NO hosted or remote MCP server. Searched the developer portal, the github.com/jampp
-  organisation (48 public repos — infrastructure forks and Ansible roles, plus one empty repo named jampp-ai-assistant
-  with no README and no code), npm, and the public MCP registries; probed https://api.jampp.com/mcp, https://api.jampp.com/v1/mcp
+summary: Jampp publishes NO hosted or remote MCP server. Searched the developer portal, the github.com/jampp organisation
+  (48 public repos — infrastructure forks and Ansible roles, plus one empty repo named jampp-ai-assistant with no
+  README and no code), npm, and the public MCP registries; probed https://api.jampp.com/mcp, https://api.jampp.com/v1/mcp
   and https://reporting-api.jampp.com/mcp (all HTTP 404) and mcp.jampp.com / ai.jampp.com / assistant.jampp.com
-  (all NXDOMAIN). The tool list below is a CANDIDATE surface derived from the five documented GraphQL
-  operations; no MCP endpoint is implied to exist and NO MCPServer pointer is wired into apis.yml.
+  (all NXDOMAIN). The tool list below is a CANDIDATE surface derived from the five documented GraphQL operations;
+  no MCP endpoint is implied to exist and NO MCPServer pointer is wired into apis.yml.
 server:
   name: jampp
   transport: null
@@ -22,8 +22,8 @@ server:
 tool_count: 5
 tools:
 - name: run_pivot_report
-  description: Run a synchronous Jampp pivot report — funnel metrics grouped by the requested dimensions
-    for a from/to period, with optional filter, cleanup, granularity, cohort and timezone context.
+  description: Run a synchronous Jampp pivot report — funnel metrics grouped by the requested dimensions for a from/to
+    period, with optional filter, cleanup, granularity, cohort and timezone context.
   source_operation: graphql:Query.pivot
   input_fields:
   - from
@@ -72,9 +72,9 @@ schema_availability:
     url: https://reporting-api.jampp.com/v1/graphql
     status: 401
     body: '{"error":"Neither Cookie nor Authorization present."}'
-  note: Real inputSchemas for these tools would come from the GraphQL argument definitions, which require
-    an authenticated introspection call. The input_fields above are the argument names printed in the
-    public reference, not a reconstructed schema.
+  note: Real inputSchemas for these tools would come from the GraphQL argument definitions, which require an authenticated
+    introspection call. The input_fields above are the argument names printed in the public reference, not a reconstructed
+    schema.
 searched:
 - https://developers.jampp.com/docs/
 - https://github.com/jampp
@@ -88,3 +88,10 @@ deployment:
   tools: 5
   checked: '2026-08-12'
   source: catalog MCP census
+observed_gated_endpoint:
+  url: https://api.jampp.com/mcp/v1
+  status: 401
+  control_status: 404
+  checked: '2026-10-20'
+  note: 'Observed by pre-flight probe only: answers 401 (control path 404), so something authenticates there, but
+    Jampp does not document or advertise it; not exercised further and not recorded as a deployment.'

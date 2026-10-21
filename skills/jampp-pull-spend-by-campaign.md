@@ -1,5 +1,6 @@
 ---
-name: Pull Jampp spend and funnel metrics by campaign
+name: pull-spend-by-campaign
+title: Pull Jampp spend and funnel metrics by campaign
 description: Authenticate against Jampp with OAuth 2.0 client credentials and run a synchronous pivot report that returns spend, impressions, clicks, installs and events grouped by campaign for a date range.
 api: https://reporting-api.jampp.com/v1/graphql
 operations:

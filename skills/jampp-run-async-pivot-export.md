@@ -1,5 +1,6 @@
 ---
-name: Export a large Jampp report through an async pivot
+name: run-async-pivot-export
+title: Export a large Jampp report through an async pivot
 description: Queue a large Jampp report with createAsyncPivot, poll asyncPivot until it reaches READY, and download the signed CSV result.
 api: https://reporting-api.jampp.com/v1/graphql
 operations:

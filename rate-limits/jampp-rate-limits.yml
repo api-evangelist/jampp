@@ -1,6 +1,7 @@
 generated: '2026-08-12'
 method: searched
 source: https://developers.jampp.com/docs/reporting-api/
+name: Jampp API Rate Limits
 limit_count: 0
 note: >-
   Jampp publishes NO numeric rate limit. There is no requests-per-second, per-minute or
